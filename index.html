@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body
+    style="
+      height: calc(100vh - 2rem);
+      width: calc(100vw - 2rem);
+      margin: 0;
+      padding: 1rem;
+    "
+  >
+    <div id="app">
+      <button id="log" onclick="chopper.$log(Date.now())">Log</button>
+      <button if="info" onclick="chopper.$info(Date.now())">Info</button>
+      <button if="warn" onclick="chopper.$warn(Date.now())">Warn</button>
+      <button if="error" onclick="chopper.$error(Date.now())">Error</button>
+      <div id="chopper"></div>
+    </div>
+
+    <script type="module" src="/demo/index.ts"></script>
+    <script type="module" defer>
+      setTimeout(() => {
+        Array.from({ length: 2 }).forEach((_, i) => {
+          chopper.$log(Date.now(), Date.now(), Date.now());
+          chopper.$info(Date.now());
+          chopper.$warn(Date.now());
+          chopper.$error(Date.now());
+        });
+      }, 10);
+    </script>
+  </body>
+</html>
