@@ -1,5 +1,5 @@
 import Overdrag, { ControlProps } from "overdrag";
-import { CLASSES, CONSOLE } from "./styles";
+import { CLASSES, CONSOLE, LEVEL_COLORS } from "./styles";
 
 /** log levels available*/
 export type Levels = "none" | "verbose" | "info" | "warn" | "error";
@@ -31,6 +31,7 @@ export default class LogEmitter extends Overdrag {
   protected readonly titleElement: HTMLElement;
   protected readonly badgeElement: HTMLElement;
   protected readonly outputElement: HTMLElement;
+  protected readonly logLevelElement: HTMLElement;
 
   // private buffer: { level: Levels; out: string }[] = [];
   // readonly bufferLength = 10;
@@ -85,7 +86,7 @@ export default class LogEmitter extends Overdrag {
       parent: this.headerElement,
       type: "div",
       className: "chopper-title",
-      text: this.name + ` [${this.level}]`,
+      text: this.name,
     });
     this.badgeElement = this.createInternalElement({
       parent: this.headerElement,
@@ -98,6 +99,41 @@ export default class LogEmitter extends Overdrag {
       type: "div",
       className: "chopper-output",
     });
+    this.logLevelElement = this.createInternalElement({
+      parent: this.titleElement,
+      type: "span",
+      className: "chopper-log-level",
+      text: this.level,
+    });
+
+    this.enableLogLevelSwitching();
+  }
+
+  private enableLogLevelSwitching() {
+    // make logLevelElement clickable that changes log level
+    // make the background color of the logLevelElement change based on the log level
+    this.logLevelElement.addEventListener("click", () => {
+      const levels = Object.keys(this.gate) as Levels[];
+      const index = levels.indexOf(this.level);
+      this.level = levels[(index + 1) % levels.length];
+      this.logLevelElement.innerText = this.level;
+
+      // change the background color of the logLevelElement
+      this.logLevelElement.style.backgroundColor =
+        LEVEL_COLORS[this.level].backgroundColor || "transparent";
+
+      // change the color of the logLevelElement
+      this.logLevelElement.style.color =
+        LEVEL_COLORS[this.level].color || "black";
+    });
+
+    // assign the background color of the logLevelElement
+    this.logLevelElement.style.backgroundColor =
+      LEVEL_COLORS[this.level].backgroundColor || "transparent";
+
+    // assign the color of the logLevelElement
+    this.logLevelElement.style.color =
+      LEVEL_COLORS[this.level].color || "black";
   }
 
   private createInternalElement({

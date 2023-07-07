@@ -1,16 +1,24 @@
 import Overdrag from "overdrag";
+
+export type Levels = "none" | "verbose" | "info" | "warn" | "error";
+export type ConsoleType = "debug" | "log" | "info" | "error" | "warn";
+export type Gates = { [E in Levels]: ConsoleType[] };
+export type Styles = {
+  [E in ConsoleType | keyof typeof CLASSES]?: Partial<CSSStyleDeclaration>;
+};
+
 /**
  * @file styles.ts
  * @description Default styles for the logger
  */
 
-export const COLORS = {
+export const COLORS: Record<ConsoleType, Partial<CSSStyleDeclaration>> = {
   debug: {
     color: "white",
     backgroundColor: "black",
   },
   log: {
-    color: "green",
+    color: "#00f600",
     backgroundColor: "black",
   },
   info: {
@@ -24,6 +32,25 @@ export const COLORS = {
   error: {
     color: "white",
     backgroundColor: "red",
+  },
+};
+
+export const LEVEL_COLORS: Record<Levels, Partial<CSSStyleDeclaration>> = {
+  verbose: {
+    ...COLORS.log,
+  },
+  info: {
+    ...COLORS.info,
+  },
+  warn: {
+    ...COLORS.warn,
+  },
+  error: {
+    ...COLORS.error,
+  },
+  none: {
+    color: "white",
+    backgroundColor: "black",
   },
 };
 
@@ -91,6 +118,20 @@ export const CLASSES = {
     fontSize: "0.7rem",
     padding: "0.3rem 0 0.3rem 1rem",
   },
+  "log-level": {
+    marginLeft: "0.5rem",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.3)",
+    padding: "0.2rem 0.5rem",
+    fontSize: "0.6rem",
+    color: "#ffeba9",
+    borderRadius: "0.5rem",
+    cursor: "pointer",
+  },
+  "log-level:hover": {
+    backgroundColor: "rgba(254, 109, 6, 0.5)",
+  },
   badge: {
     display: "flex",
     justifyContent: "center",
@@ -140,13 +181,6 @@ export const CLASSES = {
     display: "flex",
   },
   ...COLORS,
-};
-
-export type Levels = "none" | "verbose" | "info" | "warn" | "error";
-export type ConsoleType = "debug" | "log" | "info" | "error" | "warn";
-export type Gates = { [E in Levels]: ConsoleType[] };
-export type Styles = {
-  [E in ConsoleType | keyof typeof CLASSES]?: Partial<CSSStyleDeclaration>;
 };
 
 /**
