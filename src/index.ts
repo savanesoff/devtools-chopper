@@ -40,6 +40,7 @@ export default class LogEmitter extends Overdrag {
   protected readonly logLevelElement: HTMLElement;
   protected readonly pinnedOutputElement: HTMLElement;
   protected readonly displayElement: HTMLElement;
+  protected readonly statusElement: HTMLElement;
   render = true;
   bufferSize = 100;
   //   private readonly buffer: { level: Levels; out: string }[] = [];
@@ -133,15 +134,23 @@ export default class LogEmitter extends Overdrag {
     });
     this.logLevelElement = this.createInternalElement({
       parent: this.titleElement,
-      type: "span",
-      classNames: ["chopper-log-level"],
+      type: "div",
+      classNames: ["chopper-level"],
       text: this.level,
+    });
+
+    this.statusElement = this.createInternalElement({
+      parent: this.titleElement,
+      type: "div",
+      classNames: ["chopper-status"],
+      text: "click to pause",
     });
 
     this.enableLogLevelSwitching();
 
     this.on("click", () => {
       this.render = !this.render;
+      this.statusElement.innerText = this.render ? "click to pause" : "paused";
     });
 
     this.outputElement.addEventListener("scroll", (e) => {
@@ -150,6 +159,8 @@ export default class LogEmitter extends Overdrag {
           this.outputElement.scrollTop -
           this.outputElement.getBoundingClientRect().height <
         5;
+
+      this.statusElement.innerText = this.render ? "click to pause" : "paused";
     });
   }
 
@@ -246,11 +257,11 @@ export default class LogEmitter extends Overdrag {
   }
 
   console(data: unknown[], type: ConsoleType, info: EntryInfo) {
-    // console[type](
-    //   `%c${this.name} [${info.time}] (${type}) ${info.line}\n`,
-    //   this.styles[type],
-    //   ...data
-    // );
+    console[type](
+      `%c${this.name} [${info.time}] (${type}) ${info.line}\n`,
+      this.styles[type],
+      ...data
+    );
   }
 
   private renderOutput(data: unknown[], type: ConsoleType) {
@@ -260,6 +271,13 @@ export default class LogEmitter extends Overdrag {
     const info = this.getLogInfo(4);
     // TODO detect data types and JSON.parse the objects with indentation
     this.console(data, type, info);
+
+    if (
+      !this.render &&
+      this.outputElement.children.length > this.bufferSize * 2
+    ) {
+      return;
+    }
 
     this.renderEntry(this.outputElement, data, type, info);
 

@@ -111,15 +111,21 @@ export const CLASSES = {
     alignItems: "center",
     paddingRight: "0.5rem",
     backgroundColor: "rgba(0,0,0,0.7)",
+
     ...FONT,
   },
   title: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "0.5rem",
     color: "white",
     fontSize: "0.7rem",
     padding: "0.3rem 0 0.3rem 1rem",
   },
-  "log-level": {
-    marginLeft: "0.5rem",
+  level: {
+    // marginLeft: "0.5rem",
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(255,255,255,0.3)",
@@ -128,6 +134,17 @@ export const CLASSES = {
     color: "#ffeba9",
     borderRadius: "0.5rem",
     cursor: "pointer",
+  },
+  status: {
+    display: "flex",
+    // marginLeft: "0.5rem",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.371)",
+    padding: "0.2rem 0.5rem",
+    fontSize: "0.6rem",
+    color: "#d986ff",
+    borderRadius: "0.5rem",
   },
   "log-level:hover": {
     backgroundColor: "rgba(254, 109, 6, 0.5)",
