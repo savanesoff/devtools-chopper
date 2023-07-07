@@ -45,7 +45,7 @@ export default class LogEmitter extends Overdrag {
 
   constructor({
     level = "none",
-    name = "LogEmitter",
+    name = "Chopper",
     styles,
     element,
     maxContentHeight,
