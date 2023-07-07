@@ -15,11 +15,19 @@
     "
   >
     <div id="app">
+      <button id="debug" onclick="chopper.$debug(Date.now())">Debug</button>
       <button id="log" onclick="chopper.$log(Date.now())">Log</button>
-      <button if="info" onclick="chopper.$info(Date.now())">Info</button>
-      <button if="warn" onclick="chopper.$warn(Date.now())">Warn</button>
-      <button if="error" onclick="chopper.$error(Date.now())">Error</button>
-      <div id="chopper"></div>
+      <button id="info" onclick="chopper.$info(Date.now())">Info</button>
+      <button id="warn" onclick="chopper.$warn(Date.now())">Warn</button>
+      <button id="error" onclick="chopper.$error(Date.now())">Error</button>
+
+      <br />
+      Pin
+      <button id="debug" onclick="chopper.$pin.debug(Date.now())">Debug</button>
+      <button id="log" onclick="chopper.$pin.log(Date.now())">Log</button>
+      <button id="info" onclick="chopper.$pin.info(Date.now())">Info</button>
+      <button id="warn" onclick="chopper.$pin.warn(Date.now())">Warn</button>
+      <button id="error" onclick="chopper.$pin.error(Date.now())">Error</button>
     </div>
 
     <script type="module" src="/demo/index.ts"></script>

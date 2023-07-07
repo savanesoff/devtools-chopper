@@ -8,6 +8,12 @@ export type ConsoleType = "debug" | "log" | "info" | "error" | "warn";
 export type Gates = { [E in Levels]: ConsoleType[] };
 export type Styles = { [E in ConsoleType]?: Partial<CSSStyleDeclaration> };
 
+type EntryInfo = {
+  line: string | undefined;
+  time: string;
+  stack: string[];
+};
+
 interface LogEmitterProps extends ControlProps {
   name?: string;
   level?: Levels;
@@ -32,9 +38,22 @@ export default class LogEmitter extends Overdrag {
   protected readonly badgeElement: HTMLElement;
   protected readonly outputElement: HTMLElement;
   protected readonly logLevelElement: HTMLElement;
+  protected readonly pinnedOutputElement: HTMLElement;
 
-  // private buffer: { level: Levels; out: string }[] = [];
-  // readonly bufferLength = 10;
+  //   private readonly buffer: { level: Levels; out: string }[] = [];
+  //   readonly bufferLength = 10;
+  private readonly pinned: Map<
+    ConsoleType,
+    { info: EntryInfo; data: unknown[] }
+  > = new Map();
+
+  readonly $pin = {
+    debug: (...data: unknown[]) => this.pin("debug", data),
+    log: (...data: unknown[]) => this.pin("log", data),
+    info: (...data: unknown[]) => this.pin("info", data),
+    warn: (...data: unknown[]) => this.pin("warn", data),
+    error: (...data: unknown[]) => this.pin("error", data),
+  };
 
   private readonly gate: Gates = {
     verbose: ["debug", "log", "info", "warn", "error"],
@@ -98,6 +117,11 @@ export default class LogEmitter extends Overdrag {
       parent: this.element,
       type: "div",
       classNames: ["chopper-output"],
+    });
+    this.pinnedOutputElement = this.createInternalElement({
+      parent: this.element,
+      type: "div",
+      classNames: ["chopper-pinned-output"],
     });
     this.logLevelElement = this.createInternalElement({
       parent: this.titleElement,
@@ -193,48 +217,47 @@ export default class LogEmitter extends Overdrag {
     );
   }
 
-  private getLogInfo(stackIndex: number): {
-    line: string | undefined;
-    time: string;
-    stack: string | undefined;
-  } {
+  private getLogInfo(stackIndex: number): EntryInfo {
     const time = new Date().toLocaleTimeString("en-US", TIME_FORMAT);
-    const stack = new Error().stack?.split("\n")[stackIndex];
-    const line = stack?.replace(/^\s+at\s+/, "");
+    const stack = new Error().stack?.split("\n") || [];
+    const line = stack[stackIndex]?.replace(/^\s+at\s+/, "");
 
     return { time, line, stack };
   }
 
-  private render(data: unknown[], type: ConsoleType) {
-    const info = this.getLogInfo(4);
-    // filter out the types that are not allowed
-    if (!this.gate[this.level].includes(type)) return;
-    // TODO detect data types and JSON.parse the objects with indentation
+  console(data: unknown[], type: ConsoleType, info: EntryInfo) {
     console[type](
       `%c${this.name} [${info.time}] (${type}) ${info.line}\n`,
       this.styles[type],
       ...data
     );
+  }
 
-    this.renderEntry(data, type, info);
+  private render(data: unknown[], type: ConsoleType) {
+    // filter out the types that are not allowed
+    if (!this.gate[this.level].includes(type)) return;
+
+    const info = this.getLogInfo(4);
+    // TODO detect data types and JSON.parse the objects with indentation
+    this.console(data, type, info);
+
+    this.renderEntry(this.outputElement, data, type, info);
+    this.outputElement.scrollTop = this.outputElement.scrollHeight;
   }
 
   renderEntry(
+    parent: HTMLElement,
     data: unknown[],
     type: ConsoleType,
-    info: {
-      line: string | undefined;
-      time: string;
-      stack: string | undefined;
-    }
+    info: EntryInfo
   ) {
     const entry = this.createInternalElement({
-      parent: this.outputElement,
+      parent,
       type: "div",
       classNames: [`chopper-entry`, `chopper-${type}`],
     });
     // on over it will display the stack trace
-    entry.setAttribute("title", info.stack || "");
+    entry.setAttribute("title", info.stack.join("\n") || "");
 
     const details = this.createInternalElement({
       parent: entry,
@@ -265,8 +288,24 @@ export default class LogEmitter extends Overdrag {
       text: "> " + data.join("\n> "),
     });
 
-    this.outputElement.scrollTop = this.outputElement.scrollHeight;
+    return entry;
   }
+
+  private renderPinned() {
+    this.pinnedOutputElement.innerHTML = "";
+    this.pinned.forEach(({ data, info }, type) => {
+      // filter out the types that are not allowed
+      if (!this.gate[this.level].includes(type)) return;
+      this.renderEntry(this.pinnedOutputElement, data, type, info);
+    });
+  }
+
+  private readonly pin = (level: ConsoleType, data: unknown[]) => {
+    const info = this.getLogInfo(4);
+    this.console(data, level, info);
+    this.pinned.set(level, { data, info });
+    this.renderPinned();
+  };
 
   readonly $debug = (...data: unknown[]) => {
     this.render(data, "debug");

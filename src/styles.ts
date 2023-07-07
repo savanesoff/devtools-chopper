@@ -27,7 +27,7 @@ export const COLORS: Record<ConsoleType, Partial<CSSStyleDeclaration>> = {
   },
   warn: {
     color: "lightyellow",
-    backgroundColor: "#ff7c00",
+    backgroundColor: "#ffa200",
   },
   error: {
     color: "white",
@@ -143,11 +143,47 @@ export const CLASSES = {
     borderRadius: "0.5rem",
   },
   output: {
-    backgroundColor: "rgba(255,0,0,0.5)",
-    flexGrow: "1",
+    // flexGrow: "1",
     overflowY: "scroll",
     overflowX: "hidden",
     width: "calc(100% + 1.5rem)",
+  },
+  "pinned-output": {
+    // width: "calc(100% - 0.5rem)",
+    paddingLeft: "1rem",
+    position: "relative",
+    boxShadow: "-1px -8px 9px 0px rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.551)",
+  },
+  "pinned-output::before": {
+    // width: "1rem",
+    height: "inherit",
+    display: "block",
+    content: '"pin"',
+    top: "0.5rem",
+    left: "-0.0rem",
+    position: "absolute",
+    ...FONT,
+    fontSize: "0.8rem",
+    color: "rgba(255, 255, 255, 0.674)",
+    // display text verticality, reading from bottom to top
+    transform: "rotate(180deg)",
+    writingMode: "vertical-rl",
+    // textOrientation: "upright",
+  },
+
+  "pinned-output .chopper-entry::after": {
+    // width: "2rem",
+    // height: "inherit",
+    // display: "block",
+    // content: '"pin"',
+    // top: "0",
+    // left: "0",
+    // position: "absolute",
+    // // display text verticality, reading from bottom to top
+    // // transform: "rotate(180deg)",
+    // writingMode: "vertical-lr",
+    // // borderBottom: "1px solid rgba(0, 247, 255, 1)",
   },
   entry: {
     display: "flex",
@@ -155,7 +191,7 @@ export const CLASSES = {
     padding: "0.2rem 1rem 0rem 0.5rem",
     justifyContent: "space-between",
     alignItems: "stretch",
-    borderBottom: "1px solid rgba(255,255,255,0.4)",
+    borderBottom: "1px solid rgba(255,255,255,0.8)",
   },
   data: {
     display: "flex",
@@ -168,7 +204,7 @@ export const CLASSES = {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "stretch",
-    fontSize: "0.8rem",
+    fontSize: "0.6rem",
     opacity: "0.8",
     gap: "1rem",
     ...FONT,
@@ -228,9 +264,16 @@ document.getElementsByTagName("head")[0].appendChild(style);
 
 setTimeout(() => {
   Array.from({ length: 2 }).forEach((_, i) => {
+    chopper.$debug(Date.now());
     chopper.$log(Date.now(), Date.now(), Date.now(), Date.now());
-    chopper.$info("This is info message", JSON.stringify(CLASSES, null, 2));
+    chopper.$info("This is info message\n\tHello", CLASSES);
     chopper.$warn(Date.now());
     chopper.$error(Date.now());
+
+    chopper.$pin.debug(Date.now());
+    chopper.$pin.log(Date.now(), Date.now(), Date.now(), Date.now());
+    chopper.$pin.info("This is info message\n\tHello", CLASSES);
+    chopper.$pin.warn(Date.now());
+    chopper.$pin.error(Date.now());
   });
 }, 100);
