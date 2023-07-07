@@ -205,9 +205,9 @@ export default class LogEmitter extends Overdrag {
     return { time, line, stack };
   }
 
-  private render(type: ConsoleType, data: unknown[]) {
+  private render(data: unknown[], type: ConsoleType) {
     const info = this.getLogInfo(4);
-
+    // filter out the types that are not allowed
     if (!this.gate[this.level].includes(type)) return;
     // TODO detect data types and JSON.parse the objects with indentation
     console[type](
@@ -215,17 +215,17 @@ export default class LogEmitter extends Overdrag {
       this.styles[type]
     );
 
-    this.renderEntry(type, info, data);
+    this.renderEntry(data, type, info);
   }
 
   renderEntry(
+    data: unknown[],
     type: ConsoleType,
     info: {
       line: string | undefined;
       time: string;
       stack: string | undefined;
-    },
-    data: unknown[]
+    }
   ) {
     const entry = this.createInternalElement({
       parent: this.outputElement,
@@ -252,7 +252,9 @@ export default class LogEmitter extends Overdrag {
       parent: details,
       type: "span",
       classNames: ["chopper-line"],
-      text: `${info.line}`,
+      text: (info.line || "")
+        .replace(location.origin, "")
+        .replace(/\?t=\d+/, ""),
     });
 
     this.createInternalElement({
@@ -266,22 +268,22 @@ export default class LogEmitter extends Overdrag {
   }
 
   readonly $debug = (...data: unknown[]) => {
-    this.render("debug", data);
+    this.render(data, "debug");
   };
 
   readonly $log = (...data: unknown[]) => {
-    this.render("log", data);
+    this.render(data, "log");
   };
 
   readonly $info = (...data: unknown[]) => {
-    this.render("info", data);
+    this.render(data, "info");
   };
 
   readonly $warn = (...data: unknown[]) => {
-    this.render("warn", data);
+    this.render(data, "warn");
   };
 
   readonly $error = (...data: unknown[]) => {
-    this.render("error", data);
+    this.render(data, "error");
   };
 }
