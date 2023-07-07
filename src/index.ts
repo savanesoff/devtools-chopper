@@ -211,8 +211,9 @@ export default class LogEmitter extends Overdrag {
     if (!this.gate[this.level].includes(type)) return;
     // TODO detect data types and JSON.parse the objects with indentation
     console[type](
-      `%c${this.name} [${info.time}] ${info.line}\n \t${data.join("\n\t")}`,
-      this.styles[type]
+      `%c${this.name} [${info.time}] (${type}) ${info.line}\n`,
+      this.styles[type],
+      ...data
     );
 
     this.renderEntry(data, type, info);
