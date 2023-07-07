@@ -142,6 +142,13 @@ export const CLASSES = {
     color: "#ffeba9",
     borderRadius: "0.5rem",
   },
+  display: {
+    display: "flex",
+    flexDirection: "column",
+    // flexGrow: "1",
+    height: "calc(100% - 1.3rem)",
+    justifyContent: "flex-end",
+  },
   output: {
     // flexGrow: "1",
     overflowY: "scroll",
@@ -261,19 +268,3 @@ for (const [type, css] of Object.entries(compiledActionStyles)) {
   style.innerHTML += `[${type}] { ${css} }`;
 }
 document.getElementsByTagName("head")[0].appendChild(style);
-
-setTimeout(() => {
-  Array.from({ length: 2 }).forEach((_, i) => {
-    chopper.$debug(Date.now());
-    chopper.$log(Date.now(), Date.now(), Date.now(), Date.now());
-    chopper.$info("This is info message\n\tHello", CLASSES);
-    chopper.$warn(Date.now());
-    chopper.$error(Date.now());
-
-    chopper.$pin.debug(Date.now());
-    chopper.$pin.log(Date.now(), Date.now(), Date.now(), Date.now());
-    chopper.$pin.info("This is info message\n\tHello", CLASSES);
-    chopper.$pin.warn(Date.now());
-    chopper.$pin.error(Date.now());
-  });
-}, 100);

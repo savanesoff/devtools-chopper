@@ -39,7 +39,9 @@ export default class LogEmitter extends Overdrag {
   protected readonly outputElement: HTMLElement;
   protected readonly logLevelElement: HTMLElement;
   protected readonly pinnedOutputElement: HTMLElement;
-
+  protected readonly displayElement: HTMLElement;
+  render = true;
+  bufferSize = 100;
   //   private readonly buffer: { level: Levels; out: string }[] = [];
   //   readonly bufferLength = 10;
   private readonly pinned: Map<
@@ -113,13 +115,19 @@ export default class LogEmitter extends Overdrag {
       classNames: ["chopper-badge"],
       text: "chopper by Protosus",
     });
-    this.outputElement = this.createInternalElement({
+
+    this.displayElement = this.createInternalElement({
       parent: this.element,
+      type: "div",
+      classNames: ["chopper-display"],
+    });
+    this.outputElement = this.createInternalElement({
+      parent: this.displayElement,
       type: "div",
       classNames: ["chopper-output"],
     });
     this.pinnedOutputElement = this.createInternalElement({
-      parent: this.element,
+      parent: this.displayElement,
       type: "div",
       classNames: ["chopper-pinned-output"],
     });
@@ -131,6 +139,18 @@ export default class LogEmitter extends Overdrag {
     });
 
     this.enableLogLevelSwitching();
+
+    this.on("click", () => {
+      this.render = !this.render;
+    });
+
+    this.outputElement.addEventListener("scroll", (e) => {
+      this.render =
+        this.outputElement.scrollHeight -
+          this.outputElement.scrollTop -
+          this.outputElement.getBoundingClientRect().height <
+        5;
+    });
   }
 
   private enableLogLevelSwitching() {
@@ -226,14 +246,14 @@ export default class LogEmitter extends Overdrag {
   }
 
   console(data: unknown[], type: ConsoleType, info: EntryInfo) {
-    console[type](
-      `%c${this.name} [${info.time}] (${type}) ${info.line}\n`,
-      this.styles[type],
-      ...data
-    );
+    // console[type](
+    //   `%c${this.name} [${info.time}] (${type}) ${info.line}\n`,
+    //   this.styles[type],
+    //   ...data
+    // );
   }
 
-  private render(data: unknown[], type: ConsoleType) {
+  private renderOutput(data: unknown[], type: ConsoleType) {
     // filter out the types that are not allowed
     if (!this.gate[this.level].includes(type)) return;
 
@@ -242,6 +262,21 @@ export default class LogEmitter extends Overdrag {
     this.console(data, type, info);
 
     this.renderEntry(this.outputElement, data, type, info);
+
+    if (!this.render) return;
+    // remove elements if the number of elements is greater than the limit
+    while (
+      this.outputElement.firstChild &&
+      this.outputElement.children.length > this.bufferSize
+    ) {
+      //   this.outputElement.style.height =
+      //     Math.max(
+      //       parseInt(getComputedStyle(this.outputElement).height),
+      //       parseInt(getComputedStyle(this.displayElement).height)
+      //     ) + "px";
+      this.outputElement.removeChild(this.outputElement.firstChild);
+    }
+
     this.outputElement.scrollTop = this.outputElement.scrollHeight;
   }
 
@@ -308,22 +343,22 @@ export default class LogEmitter extends Overdrag {
   };
 
   readonly $debug = (...data: unknown[]) => {
-    this.render(data, "debug");
+    this.renderOutput(data, "debug");
   };
 
   readonly $log = (...data: unknown[]) => {
-    this.render(data, "log");
+    this.renderOutput(data, "log");
   };
 
   readonly $info = (...data: unknown[]) => {
-    this.render(data, "info");
+    this.renderOutput(data, "info");
   };
 
   readonly $warn = (...data: unknown[]) => {
-    this.render(data, "warn");
+    this.renderOutput(data, "warn");
   };
 
   readonly $error = (...data: unknown[]) => {
-    this.render(data, "error");
+    this.renderOutput(data, "error");
   };
 }
