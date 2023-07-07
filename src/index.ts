@@ -27,6 +27,11 @@ export default class LogEmitter extends Overdrag {
   protected level: Levels;
   protected readonly name: string;
   protected readonly styles: Styles;
+  protected readonly headerElement: HTMLElement;
+  protected readonly titleElement: HTMLElement;
+  protected readonly badgeElement: HTMLElement;
+  protected readonly outputElement: HTMLElement;
+
   // private buffer: { level: Levels; out: string }[] = [];
   // readonly bufferLength = 10;
 
@@ -45,8 +50,8 @@ export default class LogEmitter extends Overdrag {
     element,
     maxContentHeight,
     maxContentWidth,
-    minContentHeight,
-    minContentWidth,
+    minContentHeight = 100,
+    minContentWidth = 200,
     snapThreshold,
     controlsThreshold,
     clickDetectionThreshold,
@@ -60,8 +65,8 @@ export default class LogEmitter extends Overdrag {
       element,
       maxContentHeight,
       maxContentWidth,
-      minContentHeight: 100,
-      minContentWidth: 200,
+      minContentHeight,
+      minContentWidth,
       snapThreshold,
       controlsThreshold,
       clickDetectionThreshold,
@@ -70,34 +75,48 @@ export default class LogEmitter extends Overdrag {
     this.name = name;
     this.styles = this.compileStyles({ ...CONSOLE, ...styles });
 
-    // this.element.parentNode.style.position = "relative";
+    this.setupElement();
+    this.headerElement = this.createElement(
+      this.element,
+      "div",
+      "chopper-header"
+    );
+    this.titleElement = this.createElement(
+      this.headerElement,
+      "div",
+      "chopper-title",
+      this.name + ` [${this.level}]`
+    );
+    this.badgeElement = this.createElement(
+      this.headerElement,
+      "div",
+      "chopper-badge",
+      "chopper by Protosus"
+    );
+    this.outputElement = this.createElement(
+      this.element,
+      "div",
+      "chopper-output"
+    );
+  }
+
+  private createElement(
+    parent: HTMLElement,
+    type: string,
+    className: string,
+    text?: string
+  ) {
+    const element = document.createElement(type);
+    element.classList.add(className);
+    if (text) element.innerText = text;
+    parent.appendChild(element);
+    return element;
+  }
+
+  private setupElement() {
     this.element.classList.add("chopper-container");
     this.element.style.width = CLASSES.container.width;
     this.element.style.height = CLASSES.container.height;
-
-    const header = document.createElement("div");
-    header.classList.add("chopper-header");
-
-    const title = document.createElement("div");
-    title.classList.add("chopper-title");
-    title.innerText = this.name + ` [${this.level}]`;
-    header.appendChild(title);
-
-    const badge = document.createElement("div");
-    badge.classList.add("chopper-badge");
-    badge.innerText = "chopper by Protosus";
-    header.appendChild(badge);
-
-    this.outputElement = document.createElement("div");
-    this.outputElement.classList.add("chopper-output");
-
-    this.element.appendChild(header);
-    this.element.appendChild(this.outputElement);
-
-    // const scrollbarWidth =
-    //   this.element.offsetWidth - this.outputElement.offsetWidth;
-    // console.log(scrollbarWidth);
-    // this.outputElement.style.width = "calc(100% + " + scrollbarWidth + "px)";
   }
 
   setLogLevel(level: Levels) {
