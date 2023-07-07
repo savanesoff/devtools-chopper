@@ -43,8 +43,6 @@ export default class LogEmitter extends Overdrag {
   protected readonly statusElement: HTMLElement;
   render = true;
   bufferSize = 100;
-  //   private readonly buffer: { level: Levels; out: string }[] = [];
-  //   readonly bufferLength = 10;
   private readonly pinned: Map<
     ConsoleType,
     { info: EntryInfo; data: unknown[] }
@@ -287,11 +285,6 @@ export default class LogEmitter extends Overdrag {
       this.outputElement.firstChild &&
       this.outputElement.children.length > this.bufferSize
     ) {
-      //   this.outputElement.style.height =
-      //     Math.max(
-      //       parseInt(getComputedStyle(this.outputElement).height),
-      //       parseInt(getComputedStyle(this.displayElement).height)
-      //     ) + "px";
       this.outputElement.removeChild(this.outputElement.firstChild);
     }
 
