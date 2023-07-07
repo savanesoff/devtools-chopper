@@ -213,7 +213,7 @@ export default class LogEmitter extends Overdrag {
     // const joinedData = data.join("\n\t");
     // TODO use type for console method
     // TODO detect data types and JSON.parse the objects with indentation
-    console.log(
+    console[type](
       `%c${this.name} [${info.time}] ${info.line}\n \t${data.join("\n\t")}`,
       this.styles[type]
     );
