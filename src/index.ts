@@ -76,31 +76,31 @@ export default class LogEmitter extends Overdrag {
     this.styles = this.compileStyles({ ...CONSOLE, ...styles });
 
     this.setupElement();
-    this.headerElement = this.createElement({
+    this.headerElement = this.createInternalElement({
       parent: this.element,
       type: "div",
       className: "chopper-header",
     });
-    this.titleElement = this.createElement({
+    this.titleElement = this.createInternalElement({
       parent: this.headerElement,
       type: "div",
       className: "chopper-title",
       text: this.name + ` [${this.level}]`,
     });
-    this.badgeElement = this.createElement({
+    this.badgeElement = this.createInternalElement({
       parent: this.headerElement,
       type: "div",
       className: "chopper-badge",
       text: "chopper by Protosus",
     });
-    this.outputElement = this.createElement({
+    this.outputElement = this.createInternalElement({
       parent: this.element,
       type: "div",
       className: "chopper-output",
     });
   }
 
-  private createElement({
+  private createInternalElement({
     parent,
     type,
     className,
