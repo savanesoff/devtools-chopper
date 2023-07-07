@@ -80,29 +80,29 @@ export default class LogEmitter extends Overdrag {
     this.headerElement = this.createInternalElement({
       parent: this.element,
       type: "div",
-      className: "chopper-header",
+      classNames: ["chopper-header"],
     });
     this.titleElement = this.createInternalElement({
       parent: this.headerElement,
       type: "div",
-      className: "chopper-title",
+      classNames: ["chopper-title"],
       text: this.name,
     });
     this.badgeElement = this.createInternalElement({
       parent: this.headerElement,
       type: "div",
-      className: "chopper-badge",
+      classNames: ["chopper-badge"],
       text: "chopper by Protosus",
     });
     this.outputElement = this.createInternalElement({
       parent: this.element,
       type: "div",
-      className: "chopper-output",
+      classNames: ["chopper-output"],
     });
     this.logLevelElement = this.createInternalElement({
       parent: this.titleElement,
       type: "span",
-      className: "chopper-log-level",
+      classNames: ["chopper-log-level"],
       text: this.level,
     });
 
@@ -139,16 +139,16 @@ export default class LogEmitter extends Overdrag {
   private createInternalElement({
     parent,
     type,
-    className,
+    classNames,
     text,
   }: {
     parent: HTMLElement;
     type: string;
-    className: string;
+    classNames: string[];
     text?: string;
   }) {
     const element = document.createElement(type);
-    element.classList.add(className);
+    element.classList.add(...classNames);
     if (text) element.innerText = text;
     parent.appendChild(element);
     return element;
@@ -209,41 +209,59 @@ export default class LogEmitter extends Overdrag {
     const info = this.getLogInfo(4);
 
     if (!this.gate[this.level].includes(type)) return;
-
-    // const joinedData = data.join("\n\t");
-    // TODO use type for console method
     // TODO detect data types and JSON.parse the objects with indentation
     console[type](
       `%c${this.name} [${info.time}] ${info.line}\n \t${data.join("\n\t")}`,
       this.styles[type]
     );
-    const entry = document.createElement("div");
-    entry.classList.add(`chopper-entry`, `chopper-${type}`);
+
+    this.renderEntry(type, info, data);
+  }
+
+  renderEntry(
+    type: ConsoleType,
+    info: {
+      line: string | undefined;
+      time: string;
+      stack: string | undefined;
+    },
+    data: unknown[]
+  ) {
+    const entry = this.createInternalElement({
+      parent: this.outputElement,
+      type: "div",
+      classNames: [`chopper-entry`, `chopper-${type}`],
+    });
+    // on over it will display the stack trace
     entry.setAttribute("title", info.stack || "");
-    // entry.style.display = "block";
 
-    const details = document.createElement("div");
-    details.classList.add("chopper-details");
-    entry.appendChild(details);
+    const details = this.createInternalElement({
+      parent: entry,
+      type: "div",
+      classNames: ["chopper-details"],
+    });
 
-    const time = document.createElement("span");
-    time.textContent = type + "@" + info.time;
-    time.classList.add("chopper-time");
-    details.appendChild(time);
+    this.createInternalElement({
+      parent: details,
+      type: "span",
+      classNames: ["chopper-time"],
+      text: `${type}@${info.time}`,
+    });
 
-    const line = document.createElement("span");
-    line.textContent = (info.line || "")
-      .replace(location.origin, "")
-      .replace(/\?t=\d+/, "");
-    line.classList.add("chopper-line");
-    details.appendChild(line);
+    this.createInternalElement({
+      parent: details,
+      type: "span",
+      classNames: ["chopper-line"],
+      text: `${info.line}`,
+    });
 
-    const dataText = document.createElement("pre");
-    dataText.textContent = "> " + data.join("\n> ");
-    dataText.classList.add("chopper-data");
-    entry.appendChild(dataText);
+    this.createInternalElement({
+      parent: entry,
+      type: "pre",
+      classNames: ["chopper-data"],
+      text: "> " + data.join("\n> "),
+    });
 
-    this.outputElement.appendChild(entry);
     this.outputElement.scrollTop = this.outputElement.scrollHeight;
   }
 
