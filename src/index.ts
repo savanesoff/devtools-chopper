@@ -207,21 +207,6 @@ export default class LogEmitter extends Overdrag {
     dataText.classList.add("chopper-data");
     entry.appendChild(dataText);
 
-    const link = document.createElement("a");
-    const href = info.line?.match(/(?<=\().+(?=\))/)?.[0];
-    const fileName = /(.+)(?=\s\()/.exec(info.line || "")?.[0];
-    link.setAttribute("href", href || "");
-    // prevent opening in new tab
-    link.setAttribute("target", "_self");
-    // prevent refreshing the page
-    link.setAttribute("rel", "noopener noreferrer");
-    link.onclick = (e) => {
-      window.location.replace(href);
-      return false;
-    };
-    link.textContent = fileName || "";
-    // entry.prepend(link);
-
     this.outputElement.appendChild(entry);
     this.outputElement.scrollTop = this.outputElement.scrollHeight;
   }
