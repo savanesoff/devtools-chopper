@@ -76,36 +76,41 @@ export default class LogEmitter extends Overdrag {
     this.styles = this.compileStyles({ ...CONSOLE, ...styles });
 
     this.setupElement();
-    this.headerElement = this.createElement(
-      this.element,
-      "div",
-      "chopper-header"
-    );
-    this.titleElement = this.createElement(
-      this.headerElement,
-      "div",
-      "chopper-title",
-      this.name + ` [${this.level}]`
-    );
-    this.badgeElement = this.createElement(
-      this.headerElement,
-      "div",
-      "chopper-badge",
-      "chopper by Protosus"
-    );
-    this.outputElement = this.createElement(
-      this.element,
-      "div",
-      "chopper-output"
-    );
+    this.headerElement = this.createElement({
+      parent: this.element,
+      type: "div",
+      className: "chopper-header",
+    });
+    this.titleElement = this.createElement({
+      parent: this.headerElement,
+      type: "div",
+      className: "chopper-title",
+      text: this.name + ` [${this.level}]`,
+    });
+    this.badgeElement = this.createElement({
+      parent: this.headerElement,
+      type: "div",
+      className: "chopper-badge",
+      text: "chopper by Protosus",
+    });
+    this.outputElement = this.createElement({
+      parent: this.element,
+      type: "div",
+      className: "chopper-output",
+    });
   }
 
-  private createElement(
-    parent: HTMLElement,
-    type: string,
-    className: string,
-    text?: string
-  ) {
+  private createElement({
+    parent,
+    type,
+    className,
+    text,
+  }: {
+    parent: HTMLElement;
+    type: string;
+    className: string;
+    text?: string;
+  }) {
     const element = document.createElement(type);
     element.classList.add(className);
     if (text) element.innerText = text;
