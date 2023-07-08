@@ -90,6 +90,55 @@ export const ACTION_SELECTORS = {
     opacity: "1",
     boxShadow: "0 0 10px 0 rgba(0,0,0,0.5)",
   },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}]::after`]: {
+    display: "flex",
+    justifyContent: "center",
+    position: "absolute",
+    content: "''",
+    backgroundColor: "rgba(13, 255, 0, 0.898)",
+  },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}="bottom"]::after`]: {
+    bottom: "0",
+    width: "inherit",
+    height: "0.4rem",
+  },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}="top"]::after`]: {
+    top: "0",
+    width: "inherit",
+    height: "0.3rem",
+  },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}="left"]::after`]: {
+    left: "0",
+    height: "inherit",
+    width: "0.3rem",
+  },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}="right"]::after`]: {
+    right: "0",
+    height: "inherit",
+    width: "0.3rem",
+  },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}="left-top"]::after`]: {
+    left: "0",
+    height: "0.9rem",
+    width: "0.9rem",
+  },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}="right-top"]::after`]: {
+    right: "0",
+    height: "0.9rem",
+    width: "0.9rem",
+  },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}="left-bottom"]::after`]: {
+    left: "0",
+    bottom: "0",
+    height: "0.9rem",
+    width: "0.9rem",
+  },
+  [`[${Overdrag.ATTRIBUTES.CONTROLS}="right-bottom"]::after`]: {
+    right: "0",
+    bottom: "0",
+    height: "0.9rem",
+    width: "0.9rem",
+  },
 };
 
 export const CLASSES = {
