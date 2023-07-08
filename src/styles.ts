@@ -1,10 +1,12 @@
 import Overdrag from "overdrag";
+import { ConsoleType, Levels, Styles } from "./types";
 
-export type Levels = "none" | "verbose" | "info" | "warn" | "error";
-export type ConsoleType = "debug" | "log" | "info" | "error" | "warn";
-export type Gates = { [E in Levels]: ConsoleType[] };
-export type Styles = {
-  [E in ConsoleType | keyof typeof CLASSES]?: Partial<CSSStyleDeclaration>;
+const consoleLayout = {
+  padding: "0.2rem, 0.5rem",
+};
+
+const fontStyle = {
+  fontFamily: "Arial, monospace",
 };
 
 /**
@@ -33,7 +35,7 @@ export const COLORS: Record<ConsoleType, Partial<CSSStyleDeclaration>> = {
     color: "white",
     backgroundColor: "red",
   },
-};
+} as const;
 
 export const LEVEL_COLORS: Record<Levels, Partial<CSSStyleDeclaration>> = {
   verbose: {
@@ -52,43 +54,39 @@ export const LEVEL_COLORS: Record<Levels, Partial<CSSStyleDeclaration>> = {
     color: "white",
     backgroundColor: "black",
   },
-};
+} as const;
 
-export const CONSOLE_LAYOUT = {
-  padding: "0.2rem, 0.5rem",
-};
-
-export const FONT = {
-  fontFamily: "Arial, monospace",
-};
-
-export const CONSOLE = {
+export const CONSOLE_STYLE: Record<
+  ConsoleType,
+  Partial<CSSStyleDeclaration>
+> = {
   debug: {
     ...COLORS.debug,
-    ...CONSOLE_LAYOUT,
+    ...consoleLayout,
   },
   log: {
     ...COLORS.log,
-    ...CONSOLE_LAYOUT,
+    ...consoleLayout,
   },
   info: {
     ...COLORS.info,
-    ...CONSOLE_LAYOUT,
+    ...consoleLayout,
   },
   warn: {
     ...COLORS.warn,
-    ...CONSOLE_LAYOUT,
+    ...consoleLayout,
     fontWeight: "bold",
   },
   error: {
     ...COLORS.error,
-    ...CONSOLE_LAYOUT,
+    ...consoleLayout,
   },
-};
+} as const;
 
 export const ACTION_SELECTORS = {
   [Overdrag.ATTRIBUTES.OVER]: {
     opacity: "1",
+    boxShadow: "0 0 10px 0 rgba(0,0,0,0.5)",
   },
 };
 
@@ -102,7 +100,6 @@ export const CLASSES = {
     display: "flex",
     flexDirection: "column",
     opacity: "0.9",
-    boxShadow: "0 0 10px 0 rgba(0,0,0,0.5)",
   },
   header: {
     display: "flex",
@@ -112,7 +109,7 @@ export const CLASSES = {
     paddingRight: "0.5rem",
     backgroundColor: "rgba(0,0,0,0.7)",
 
-    ...FONT,
+    ...fontStyle,
   },
   title: {
     display: "flex",
@@ -153,17 +150,17 @@ export const CLASSES = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.3)",
+    backgroundColor: "rgba(0, 0, 0, 0.415)",
     padding: "0 0.5rem",
     fontSize: "0.6rem",
-    color: "#ffeba9",
+    color: "#ffdf77",
     borderRadius: "0.5rem",
   },
   display: {
     display: "flex",
     flexDirection: "column",
     // flexGrow: "1",
-    height: "calc(100% - 1.3rem)",
+    height: "calc(100% - 1.7rem)",
     justifyContent: "flex-end",
   },
   output: {
@@ -173,41 +170,24 @@ export const CLASSES = {
     width: "calc(100% + 1.5rem)",
   },
   "pinned-output": {
-    // width: "calc(100% - 0.5rem)",
     paddingLeft: "1rem",
     position: "relative",
     boxShadow: "-1px -8px 9px 0px rgba(0,0,0,0.5)",
     backgroundColor: "rgba(0, 0, 0, 0.551)",
   },
   "pinned-output::before": {
-    // width: "1rem",
     height: "inherit",
     display: "block",
     content: '"pin"',
     top: "0.5rem",
     left: "-0.0rem",
     position: "absolute",
-    ...FONT,
+    ...fontStyle,
     fontSize: "0.8rem",
     color: "rgba(255, 255, 255, 0.674)",
     // display text verticality, reading from bottom to top
     transform: "rotate(180deg)",
     writingMode: "vertical-rl",
-    // textOrientation: "upright",
-  },
-
-  "pinned-output .chopper-entry::after": {
-    // width: "2rem",
-    // height: "inherit",
-    // display: "block",
-    // content: '"pin"',
-    // top: "0",
-    // left: "0",
-    // position: "absolute",
-    // // display text verticality, reading from bottom to top
-    // // transform: "rotate(180deg)",
-    // writingMode: "vertical-lr",
-    // // borderBottom: "1px solid rgba(0, 247, 255, 1)",
   },
   entry: {
     display: "flex",
@@ -219,9 +199,9 @@ export const CLASSES = {
   },
   data: {
     display: "flex",
-    fontSize: "0.8rem",
+    fontSize: "0.7rem",
     margin: "0.3rem 0",
-    ...FONT,
+    ...fontStyle,
   },
   details: {
     display: "flex",
@@ -231,9 +211,8 @@ export const CLASSES = {
     fontSize: "0.6rem",
     opacity: "0.8",
     gap: "1rem",
-    ...FONT,
+    ...fontStyle,
   },
-
   line: {
     display: "flex",
   },
@@ -246,25 +225,19 @@ export const CLASSES = {
 /**
  * Converts camel case properties of styles to kebab case to be assigned to the console CSS
  */
-function compileStyles(styles: Styles): Styles {
-  const entries = Object.entries(styles) as [
-    keyof Styles,
-    Partial<CSSStyleDeclaration>
-  ][];
-  const newStyles = {} as Styles;
-  entries.forEach(([type, cssProperties]) => {
-    const transformedCss = Object.entries({
-      ...cssProperties,
-    })
+export function compileStyles(styles: Styles): Styles {
+  const compiledStyles: Styles = {};
+  for (const [type, cssProperties] of Object.entries(styles)) {
+    const transformedCss = Object.entries(cssProperties)
       .map(([k, v]) => `${toKebabCase(k)}: ${v};`)
       .join("");
-    newStyles[type] = transformedCss as Partial<CSSStyleDeclaration>;
-  });
-  return newStyles;
+    compiledStyles[type] = transformedCss as Partial<CSSStyleDeclaration>;
+  }
+  return compiledStyles;
 }
 
 /**
- * Camel case to kebab case
+ * Convert camel case to kebab case
  */
 function toKebabCase(name: string): string {
   return name.replace(
@@ -273,15 +246,13 @@ function toKebabCase(name: string): string {
   );
 }
 
-const compiledStyles = compileStyles(CLASSES);
-var style = document.createElement("style");
-// style.type = 'text/css';
-for (const [type, css] of Object.entries(compiledStyles)) {
-  style.innerHTML += `.chopper-${type} { ${css} }`;
+function addStyles(element: HTMLStyleElement, styles: Styles, prefix = "") {
+  for (const [type, css] of Object.entries(styles)) {
+    element.innerHTML += `${prefix}${type} { ${css} }`;
+  }
 }
+const style = document.createElement("style");
 
-const compiledActionStyles = compileStyles(ACTION_SELECTORS);
-for (const [type, css] of Object.entries(compiledActionStyles)) {
-  style.innerHTML += `[${type}] { ${css} }`;
-}
 document.getElementsByTagName("head")[0].appendChild(style);
+addStyles(style, compileStyles(CLASSES), ".chopper-");
+addStyles(style, compileStyles(ACTION_SELECTORS));

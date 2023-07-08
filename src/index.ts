@@ -1,25 +1,25 @@
 import Overdrag, { ControlProps } from "overdrag";
-import { CLASSES, CONSOLE, LEVEL_COLORS } from "./styles";
+import { CLASSES, CONSOLE_STYLE, LEVEL_COLORS, compileStyles } from "./styles";
+import { ConsoleType, Levels, Styles } from "./types";
 
-/** log levels available*/
-export type Levels = "none" | "verbose" | "info" | "warn" | "error";
-/** io methods */
-export type ConsoleType = "debug" | "log" | "info" | "error" | "warn";
+// Define gates object type that maps log levels to an array of allowed console methods
 export type Gates = { [E in Levels]: ConsoleType[] };
-export type Styles = { [E in ConsoleType]?: Partial<CSSStyleDeclaration> };
 
+// Define EntryInfo type for log entry information
 type EntryInfo = {
   line: string | undefined;
   time: string;
   stack: string[];
 };
 
+// Define props interface for LogEmitter class
 interface LogEmitterProps extends ControlProps {
   name?: string;
   level?: Levels;
   styles?: Styles;
 }
 
+// Define time format options for Intl.DateTimeFormat
 const TIME_FORMAT: Intl.DateTimeFormatOptions = {
   hour: "2-digit",
   minute: "numeric",
@@ -29,6 +29,7 @@ const TIME_FORMAT: Intl.DateTimeFormatOptions = {
   hourCycle: "h23",
 };
 
+// Define LogEmitter class
 export default class LogEmitter extends Overdrag {
   protected level: Levels;
   protected readonly name: string;
@@ -48,6 +49,7 @@ export default class LogEmitter extends Overdrag {
     { info: EntryInfo; data: unknown[] }
   > = new Map();
 
+  // Create pin methods for each console method
   readonly $pin = {
     debug: (...data: unknown[]) => this.pin("debug", data),
     log: (...data: unknown[]) => this.pin("log", data),
@@ -56,6 +58,7 @@ export default class LogEmitter extends Overdrag {
     error: (...data: unknown[]) => this.pin("error", data),
   };
 
+  // Define the gate object that maps log levels to allowed console methods
   private readonly gate: Gates = {
     verbose: ["debug", "log", "info", "warn", "error"],
     info: ["info", "warn", "error"],
@@ -94,7 +97,7 @@ export default class LogEmitter extends Overdrag {
     });
     this.level = level;
     this.name = name;
-    this.styles = this.compileStyles({ ...CONSOLE, ...styles });
+    this.styles = compileStyles({ ...CONSOLE_STYLE, ...styles });
 
     this.setupElement();
     this.headerElement = this.createInternalElement({
@@ -163,28 +166,27 @@ export default class LogEmitter extends Overdrag {
   }
 
   private enableLogLevelSwitching() {
-    // make logLevelElement clickable that changes log level
-    // make the background color of the logLevelElement change based on the log level
+    // Make logLevelElement clickable that changes log level
     this.logLevelElement.addEventListener("click", () => {
       const levels = Object.keys(this.gate) as Levels[];
       const index = levels.indexOf(this.level);
       this.level = levels[(index + 1) % levels.length];
       this.logLevelElement.innerText = this.level;
 
-      // change the background color of the logLevelElement
+      // Change the background color of the logLevelElement based on the log level
       this.logLevelElement.style.backgroundColor =
         LEVEL_COLORS[this.level].backgroundColor || "transparent";
 
-      // change the color of the logLevelElement
+      // Change the color of the logLevelElement based on the log level
       this.logLevelElement.style.color =
         LEVEL_COLORS[this.level].color || "black";
     });
 
-    // assign the background color of the logLevelElement
+    // Assign the background color of the logLevelElement based on the log level
     this.logLevelElement.style.backgroundColor =
       LEVEL_COLORS[this.level].backgroundColor || "transparent";
 
-    // assign the color of the logLevelElement
+    // Assign the color of the logLevelElement based on the log level
     this.logLevelElement.style.color =
       LEVEL_COLORS[this.level].color || "black";
   }
@@ -213,37 +215,9 @@ export default class LogEmitter extends Overdrag {
     this.element.style.height = CLASSES.container.height;
   }
 
+  // Set log level
   setLogLevel(level: Levels) {
     this.level = level;
-  }
-
-  /**
-   * Converts camel case properties of styles to kebab case to be assigned to the console CSS
-   */
-  private compileStyles(styles: Styles): Styles {
-    const entries = Object.entries(styles) as [
-      ConsoleType,
-      Partial<CSSStyleDeclaration>
-    ][];
-    entries.forEach(([type, cssProperties]) => {
-      const transformedCss = Object.entries({
-        ...cssProperties,
-      })
-        .map(([k, v]) => `${this.toKebabCase(k)}: ${v};`)
-        .join("");
-      styles[type] = transformedCss as Partial<CSSStyleDeclaration>;
-    });
-    return styles;
-  }
-
-  /**
-   * Camel case to kebab case
-   */
-  private toKebabCase(name: string): string {
-    return name.replace(
-      /[A-Z]+(?![a-z])|[A-Z]/g,
-      ($, ofs) => (ofs ? "-" : "") + $.toLowerCase()
-    );
   }
 
   private getLogInfo(stackIndex: number): EntryInfo {
@@ -263,11 +237,11 @@ export default class LogEmitter extends Overdrag {
   }
 
   private renderOutput(data: unknown[], type: ConsoleType) {
-    // filter out the types that are not allowed
+    // Filter out the types that are not allowed
     if (!this.gate[this.level].includes(type)) return;
 
     const info = this.getLogInfo(4);
-    // TODO detect data types and JSON.parse the objects with indentation
+    // TODO: Detect data types and JSON.parse the objects with indentation
     this.console(data, type, info);
 
     if (
@@ -280,7 +254,7 @@ export default class LogEmitter extends Overdrag {
     this.renderEntry(this.outputElement, data, type, info);
 
     if (!this.render) return;
-    // remove elements if the number of elements is greater than the limit
+    // Remove elements if the number of elements is greater than the limit
     while (
       this.outputElement.firstChild &&
       this.outputElement.children.length > this.bufferSize
@@ -302,7 +276,7 @@ export default class LogEmitter extends Overdrag {
       type: "div",
       classNames: [`chopper-entry`, `chopper-${type}`],
     });
-    // on over it will display the stack trace
+    // On hover, display the stack trace as a tooltip
     entry.setAttribute("title", info.stack.join("\n") || "");
 
     const details = this.createInternalElement({
@@ -340,7 +314,7 @@ export default class LogEmitter extends Overdrag {
   private renderPinned() {
     this.pinnedOutputElement.innerHTML = "";
     this.pinned.forEach(({ data, info }, type) => {
-      // filter out the types that are not allowed
+      // Filter out the types that are not allowed
       if (!this.gate[this.level].includes(type)) return;
       this.renderEntry(this.pinnedOutputElement, data, type, info);
     });
