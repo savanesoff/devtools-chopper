@@ -37,6 +37,7 @@ export const COLORS: Record<ConsoleType, Partial<CSSStyleDeclaration>> = {
   },
 } as const;
 
+// styles for the log level button
 export const LEVEL_COLORS: Record<Levels, Partial<CSSStyleDeclaration>> = {
   verbose: {
     ...COLORS.log,
@@ -56,6 +57,7 @@ export const LEVEL_COLORS: Record<Levels, Partial<CSSStyleDeclaration>> = {
   },
 } as const;
 
+// styles for the console output
 export const CONSOLE_STYLE: Record<
   ConsoleType,
   Partial<CSSStyleDeclaration>
