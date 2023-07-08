@@ -154,7 +154,7 @@ export default class LogEmitter extends Overdrag {
       this.statusElement.innerText = this.render ? "click to pause" : "paused";
     });
 
-    this.outputElement.addEventListener("scroll", (e) => {
+    this.outputElement.addEventListener("scroll", () => {
       this.render =
         this.outputElement.scrollHeight -
           this.outputElement.scrollTop -
