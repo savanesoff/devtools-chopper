@@ -23,7 +23,6 @@ const TIME_FORMAT: Intl.DateTimeFormatOptions = {
   hour: "2-digit",
   minute: "numeric",
   second: "2-digit",
-  // @ts-ignore
   fractionalSecondDigits: 3,
   hourCycle: "h23",
 };

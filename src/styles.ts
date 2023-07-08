@@ -91,6 +91,7 @@ export const ACTION_SELECTORS = {
     boxShadow: "0 0 10px 0 rgba(0,0,0,0.5)",
   },
   [`[${Overdrag.ATTRIBUTES.CONTROLS}]::after`]: {
+    zIndex: "2",
     display: "flex",
     justifyContent: "center",
     position: "absolute",
@@ -158,7 +159,7 @@ export const CLASSES = {
     justifyContent: "space-between",
     alignItems: "center",
     paddingRight: "0.5rem",
-    backgroundColor: "rgba(0,0,0,0.7)",
+    backgroundColor: "rgba(0,0,0,0.8)",
     zIndex: "1",
     gap: "0.5rem",
     ...fontStyle,

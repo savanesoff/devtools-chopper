@@ -6,55 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + TS</title>
   </head>
-  <body
-    style="
-      height: calc(100vh - 2rem);
-      width: calc(100vw - 2rem);
-      margin: 0;
-      padding: 1rem;
-    "
-  >
-    <div id="app">
-      <button id="debug" onclick="chopper.$debug(Date.now())">Debug</button>
-      <button id="log" onclick="chopper.$log(Date.now())">Log</button>
-      <button id="info" onclick="chopper.$info(Date.now())">Info</button>
-      <button id="warn" onclick="chopper.$warn(Date.now())">Warn</button>
-      <button id="error" onclick="chopper.$error(Date.now())">Error</button>
-
-      <br />
-      Pin
-      <button id="debug" onclick="chopper.$pin.debug(Date.now())">Debug</button>
-      <button id="log" onclick="chopper.$pin.log(Date.now())">Log</button>
-      <button id="info" onclick="chopper.$pin.info(Date.now())">Info</button>
-      <button id="warn" onclick="chopper.$pin.warn(Date.now())">Warn</button>
-      <button id="error" onclick="chopper.$pin.error(Date.now())">Error</button>
-    </div>
-
-    <script type="module" src="/demo/index.ts"></script>
-    <script type="module" defer>
-      setInterval(() => {
-        Array.from({ length: 2 }).forEach((_, i) => {
-          chopper.$log(Date.now());
-          // chopper.$log(Date.now(), Date.now(), Date.now(), Date.now());
-          // chopper.$info("This is info message\n\tHello", {
-          //   name: "Sam",
-          //   age: 20,
-          //   height: 180,
-          // });
-          Math.random() > 0.9 ? chopper.$warn(Date.now()) : "";
-          // chopper.$error(Date.now());
-
-          chopper.$pin.debug(Date.now());
-          chopper.$pin.log(Date.now(), Date.now(), Date.now(), Date.now());
-          chopper.$pin.info("This is info message\n\tHello", {
-            name: "Sam",
-            age: 20,
-            height: 180,
-          });
-          chopper.$pin.warn(Date.now());
-          chopper.$pin.error(Date.now());
-        });
-      }, 100);
-    </script>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/demo/main.tsx"></script>
   </body>
 </html>
