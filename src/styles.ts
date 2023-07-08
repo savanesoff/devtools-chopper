@@ -160,6 +160,7 @@ export const CLASSES = {
     paddingRight: "0.5rem",
     backgroundColor: "rgba(0,0,0,0.7)",
     zIndex: "1",
+    gap: "0.5rem",
     ...fontStyle,
   },
   title: {
@@ -193,6 +194,7 @@ export const CLASSES = {
     fontSize: "0.6rem",
     color: "#d986ff",
     borderRadius: "0.5rem",
+    textWrap: "nowrap",
   },
   "log-level:hover": {
     backgroundColor: "rgba(254, 109, 6, 0.5)",
@@ -206,6 +208,7 @@ export const CLASSES = {
     fontSize: "0.6rem",
     color: "#ffdf77",
     borderRadius: "0.5rem",
+    textWrap: "nowrap",
   },
   display: {
     display: "flex",
