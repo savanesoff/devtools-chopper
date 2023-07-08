@@ -159,7 +159,7 @@ export const CLASSES = {
     alignItems: "center",
     paddingRight: "0.5rem",
     backgroundColor: "rgba(0,0,0,0.7)",
-
+    zIndex: "1",
     ...fontStyle,
   },
   title: {
