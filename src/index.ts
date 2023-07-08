@@ -9,7 +9,6 @@ export type Gates = { [E in Levels]: ConsoleType[] };
 type EntryInfo = {
   line: string | undefined;
   time: string;
-  stack: string[];
 };
 
 // Define props interface for LogEmitter class
@@ -44,6 +43,7 @@ export default class LogEmitter extends Overdrag {
   protected readonly statusElement: HTMLElement;
   render = true;
   bufferSize = 100;
+  bufferPausedSize = 1000;
   private readonly pinned: Map<
     ConsoleType,
     { info: EntryInfo; data: unknown[] }
@@ -222,10 +222,12 @@ export default class LogEmitter extends Overdrag {
 
   private getLogInfo(stackIndex: number): EntryInfo {
     const time = new Date().toLocaleTimeString("en-US", TIME_FORMAT);
-    const stack = new Error().stack?.split("\n") || [];
-    const line = stack[stackIndex]?.replace(/^\s+at\s+/, "");
+    const line = (new Error().stack?.split("\n") || [])[stackIndex]?.replace(
+      /^\s+at\s+/,
+      ""
+    );
 
-    return { time, line, stack };
+    return { time, line };
   }
 
   console(data: unknown[], type: ConsoleType, info: EntryInfo) {
@@ -244,9 +246,10 @@ export default class LogEmitter extends Overdrag {
     // TODO: Detect data types and JSON.parse the objects with indentation
     this.console(data, type, info);
 
+    // If the console is paused, only render the output if the number of elements is less than the limit
     if (
       !this.render &&
-      this.outputElement.children.length > this.bufferSize * 2
+      this.outputElement.children.length > this.bufferPausedSize
     ) {
       return;
     }
@@ -265,6 +268,9 @@ export default class LogEmitter extends Overdrag {
     this.outputElement.scrollTop = this.outputElement.scrollHeight;
   }
 
+  /**
+   * Render the entry to the output element
+   */
   renderEntry(
     parent: HTMLElement,
     data: unknown[],
@@ -277,7 +283,7 @@ export default class LogEmitter extends Overdrag {
       classNames: [`chopper-entry`, `chopper-${type}`],
     });
     // On hover, display the stack trace as a tooltip
-    entry.setAttribute("title", info.stack.join("\n") || "");
+    entry.setAttribute("title", `${type}@${info.line}`);
 
     const details = this.createInternalElement({
       parent: entry,
