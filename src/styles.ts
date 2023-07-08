@@ -146,7 +146,7 @@ export const CLASSES = {
     overflow: "hidden",
     width: "500px",
     height: "300px",
-    backgroundColor: "transparent",
+    backgroundColor: "#00000046",
     borderRadius: "5px",
     display: "flex",
     flexDirection: "column",
