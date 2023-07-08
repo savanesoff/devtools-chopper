@@ -24,16 +24,16 @@ export const COLORS: Record<ConsoleType, Partial<CSSStyleDeclaration>> = {
     backgroundColor: "black",
   },
   info: {
-    color: "#13136b",
+    color: "#1639af",
     backgroundColor: "skyblue",
   },
   warn: {
     color: "lightyellow",
-    backgroundColor: "#ffa200",
+    backgroundColor: "#bc7700",
   },
   error: {
     color: "white",
-    backgroundColor: "red",
+    backgroundColor: "#a30202",
   },
 } as const;
 
