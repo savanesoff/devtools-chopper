@@ -1,3 +1,4 @@
+import { screen } from "@testing-library/dom";
 import "vitest-dom/extend-expect";
 import Chopper from "./../src";
 
@@ -60,5 +61,10 @@ describe("Constructor", () => {
 
   it(`Should be defined`, () => {
     expect(Chopper).toBeDefined();
+  });
+
+  it("Should render chopper", () => {
+    new Chopper({ name: "Super name" });
+    expect(screen.getByText("Super name")).toBeInTheDocument();
   });
 });
