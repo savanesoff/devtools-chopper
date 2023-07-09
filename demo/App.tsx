@@ -1,16 +1,19 @@
+import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import "./App.css";
 import "./chopper";
-
 function App() {
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    fetch("../README.md")
+      .then((res) => res.text())
+      .then((text) => setContent(text));
+  }, []);
+
   return (
     <>
-      <h1>devtools-chopper</h1>
-      <p>
-        Chopper is a simple, fast and flexible log control tool designed display
-        logs in browser window with various filters, drag and resize
-        capabilities.
-      </p>
-      <div></div>
+      <ReactMarkdown children={content} />
     </>
   );
 }
