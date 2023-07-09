@@ -1,7 +1,7 @@
 {
   "name": "devtools-chopper",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "Chopper is a Javascript log display devtool which allows you to monitor application logs in DOM",
   "bugs": {
