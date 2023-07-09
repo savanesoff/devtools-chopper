@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 0.1.1
+
+### Patch Changes
+
+- GH pages demo deployment fix
+
 ## 0.1.0
 
 ### Minor Changes
