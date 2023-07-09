@@ -11,9 +11,9 @@ type EntryInfo = {
   time: string;
 };
 
-// Define props interface for LogEmitter class
-interface LogEmitterProps extends ControlProps {
-  name?: string;
+// Define props interface for Chopper class
+interface ChopperProps extends Partial<ControlProps> {
+  name: string;
   level?: Levels;
   styles?: Styles;
 }
@@ -27,8 +27,8 @@ const TIME_FORMAT: Intl.DateTimeFormatOptions = {
   hourCycle: "h23",
 };
 
-// Define LogEmitter class
-export default class LogEmitter extends Overdrag {
+// Define Chopper class
+export default class Chopper extends Overdrag {
   protected level: Levels;
   protected readonly name: string;
   protected readonly styles: Styles;
@@ -78,7 +78,7 @@ export default class LogEmitter extends Overdrag {
     snapThreshold,
     controlsThreshold,
     clickDetectionThreshold,
-  }: LogEmitterProps) {
+  }: ChopperProps) {
     // Create a new element if none is provided
     if (!element) {
       element = document.createElement("div");
