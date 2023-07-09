@@ -1,23 +1,19 @@
 import { useState } from "react";
 import "./App.css";
-import reactLogo from "./assets/react.svg";
 import "./chopper";
-import viteLogo from "/vite.svg";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1>devtools-chopper</h1>
+      <p>
+        Chopper is a simple, fast and flexible log control tool designed display
+        logs in browser window with various filters, drag and resize
+        capabilities.
+      </p>
+      <div></div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
