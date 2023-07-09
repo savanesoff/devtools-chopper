@@ -16,6 +16,7 @@ interface ChopperProps extends Partial<ControlProps> {
   name: string;
   level?: Levels;
   styles?: Styles;
+  console?: boolean;
 }
 
 // Define time format options for Intl.DateTimeFormat
@@ -40,6 +41,7 @@ export default class Chopper extends Overdrag {
   protected readonly pinnedOutputElement: HTMLElement;
   protected readonly displayElement: HTMLElement;
   protected readonly statusElement: HTMLElement;
+  printToConsole: boolean;
   render = true;
   bufferSize = 100;
   bufferPausedSize = 1000;
@@ -67,6 +69,7 @@ export default class Chopper extends Overdrag {
   };
 
   constructor({
+    console = true,
     level = "verbose",
     name,
     styles,
@@ -104,6 +107,7 @@ export default class Chopper extends Overdrag {
     this.level = level;
     this.name = name;
     this.styles = compileStyles({ ...CONSOLE_STYLE, ...styles });
+    this.printToConsole = console;
 
     this.setupElement();
     this.headerElement = this.createInternalElement({
@@ -239,6 +243,7 @@ export default class Chopper extends Overdrag {
   }
 
   console(data: unknown[], type: ConsoleType, info: EntryInfo) {
+    if (!this.printToConsole) return;
     console[type](
       `%c${this.name} [${info.time}] (${type}) ${info.line}\n`,
       this.styles[type],
