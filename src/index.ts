@@ -172,6 +172,13 @@ export default class Chopper extends Overdrag {
       this.level = levels[(index + 1) % levels.length];
       this.logLevelElement.innerText = this.level;
 
+      this.setLevelButtonColor();
+    });
+
+    this.setLevelButtonColor();
+  }
+
+  private setLevelButtonColor() {
       // Change the background color of the logLevelElement based on the log level
       this.logLevelElement.style.backgroundColor =
         LEVEL_COLORS[this.level].backgroundColor || "transparent";
@@ -179,14 +186,9 @@ export default class Chopper extends Overdrag {
       // Change the color of the logLevelElement based on the log level
       this.logLevelElement.style.color =
         LEVEL_COLORS[this.level].color || "black";
-    });
 
-    // Assign the background color of the logLevelElement based on the log level
-    this.logLevelElement.style.backgroundColor =
-      LEVEL_COLORS[this.level].backgroundColor || "transparent";
-
-    // Assign the color of the logLevelElement based on the log level
-    this.logLevelElement.style.color =
+    // Change outline color of the logLevelElement based on the log level
+    this.logLevelElement.style.outlineColor =
       LEVEL_COLORS[this.level].color || "black";
   }
 
