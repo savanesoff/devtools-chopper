@@ -20,6 +20,15 @@
     "name": "Samvel Avanesov",
     "email": "sam.avanesoff@gmail.com"
   },
+  "packageManager": "^pnpm@8.6.6",
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "types": "./dist/types/index.d.ts",
   "main": "./dist/index.js",
   "scripts": {
@@ -28,13 +37,12 @@
     "build:demo": "bash ./demo-build.sh --path tsconfig.build.demo.json",
     "deploy:demo": "pnpm run build:demo && gh-pages -d dist-demo",
     "preview": "vite preview",
-    "prepublish": "pnpm run build",
-    "predeploy": "pnpm run prepublish",
     "clean": "rm -rf ./dist",
     "build": "pnpm run clean && pnpm run build:esm",
     "build:esm": "tsc -p ./tsconfig.build.json && mv ./dist/index.js ./dist/index.mjs",
     "prepack": "pnpm run build",
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "release": "pnpm build && pnpm test && pnpm changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
@@ -59,5 +67,17 @@
   },
   "dependencies": {
     "overdrag": "^1.0.1"
-  }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**/*"
+  ]
 }
