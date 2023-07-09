@@ -161,7 +161,9 @@ export default class Chopper extends Overdrag {
 
     this.on("click", () => {
       this.render = !this.render;
-      this.statusElement.innerText = this.render ? "click to pause" : "paused";
+      this.statusElement.textContent = this.render
+        ? "click to pause"
+        : "paused";
     });
 
     this.outputElement.addEventListener("scroll", () => {
@@ -171,7 +173,9 @@ export default class Chopper extends Overdrag {
           this.outputElement.getBoundingClientRect().height <
         5;
 
-      this.statusElement.innerText = this.render ? "click to pause" : "paused";
+      this.statusElement.textContent = this.render
+        ? "click to pause"
+        : "paused";
     });
   }
 
@@ -181,7 +185,7 @@ export default class Chopper extends Overdrag {
       const levels = Object.keys(this.gate) as Levels[];
       const index = levels.indexOf(this.level);
       this.level = levels[(index + 1) % levels.length];
-      this.logLevelElement.innerText = this.level;
+      this.logLevelElement.textContent = this.level;
 
       this.setLevelButtonColor();
     });
@@ -216,7 +220,7 @@ export default class Chopper extends Overdrag {
   }) {
     const element = document.createElement(type);
     element.classList.add(...classNames);
-    if (text) element.innerText = text;
+    if (text) element.textContent = text;
     parent.appendChild(element);
     return element;
   }

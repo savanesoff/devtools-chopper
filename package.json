@@ -2,17 +2,51 @@
   "name": "devtools-chopper",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
+  "description": "Chopper is a Javascript log display devtool which allows you to monitor application logs in DOM",
+  "bugs": {
+    "url": "https://github.com/savanesoff/devtools-chopper/issues"
+  },
+  "homepage": "https://savanesoff.github.io/devtools-chopper",
+  "keywords": [
+    "logger",
+    "dom logger",
+    "control points",
+    "overdrag",
+    "log monitor"
+  ],
   "type": "module",
+  "author": {
+    "name": "Samvel Avanesov",
+    "email": "sam.avanesoff@gmail.com"
+  },
+  "packageManager": "^pnpm@8.6.6",
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "./dist/types/index.d.ts",
+  "main": "./dist/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "clean:demo": "rm -rf ./dist-demo",
+    "build:demo": "bash ./demo-build.sh --path tsconfig.build.demo.json",
+    "deploy:demo": "pnpm run build:demo && gh-pages -d dist-demo",
+    "preview": "vite preview",
+    "clean": "rm -rf ./dist",
+    "build": "pnpm run clean && pnpm run build:esm",
+    "build:esm": "tsc -p ./tsconfig.build.json && mv ./dist/index.js ./dist/index.mjs",
+    "prepack": "pnpm run build",
+    "test": "vitest --run",
+    "release": "pnpm build && pnpm test && pnpm changeset publish"
   },
   "devDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "@changesets/cli": "^2.26.2",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/dom": "^9.3.1",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
@@ -22,7 +56,10 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "gh-pages": "^5.0.0",
     "jsdom": "^22.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
     "vitest": "^0.32.4",
@@ -30,5 +67,17 @@
   },
   "dependencies": {
     "overdrag": "^1.0.1"
-  }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**/*"
+  ]
 }
