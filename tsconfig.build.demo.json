@@ -17,7 +17,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "."
-  },
-  "files": ["demo/main.tsx"],
-  "references": [{ "path": "tsconfig.node.json" }]
+  }
 }
