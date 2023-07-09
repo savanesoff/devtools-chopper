@@ -2,11 +2,37 @@
   "name": "devtools-chopper",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
+  "description": "Chopper is a Javascript log display devtool which allows you to monitor application logs in DOM",
+  "bugs": {
+    "url": "https://github.com/savanesoff/overdrag/issues"
+  },
+  "homepage": "https://savanesoff.github.io/overdrag-vanilla-demo",
+  "keywords": [
+    "logger",
+    "dom logger",
+    "control points",
+    "overdrag",
+    "log monitor"
+  ],
   "type": "module",
+  "author": {
+    "name": "Samvel Avanesov",
+    "email": "sam.avanesoff@gmail.com"
+  },
+  "types": "./dist/types/index.d.ts",
+  "main": "./dist/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build:demo": "tsc && vite build",
+    "preview": "vite preview",
+    "prepublish": "pnpm run build",
+    "predeploy": "pnpm run prepublish",
+    "clean": "rm -rf ./dist",
+    "build": "pnpm run clean && pnpm run build:esm",
+    "build:esm": "tsc -p ./tsconfig.build.json && mv ./dist/index.js ./dist/index.mjs",
+    "prepack": "pnpm run build",
+    "test": "vitest --run"
   },
   "devDependencies": {
     "react": "^18.2.0",
