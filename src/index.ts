@@ -67,8 +67,8 @@ export default class Chopper extends Overdrag {
   };
 
   constructor({
-    level = "none",
-    name = "Chopper",
+    level = "verbose",
+    name,
     styles,
     element,
     maxContentHeight,
@@ -83,6 +83,13 @@ export default class Chopper extends Overdrag {
     if (!element) {
       element = document.createElement("div");
       document.body.appendChild(element);
+      element.style.left = `${Math.floor(
+        Math.random() * (window.innerWidth - parseInt(CLASSES.container.width))
+      )}px`;
+      element.style.top = `${Math.floor(
+        Math.random() *
+          (window.innerHeight - parseInt(CLASSES.container.height))
+      )}px`;
     }
     super({
       element,
@@ -114,7 +121,7 @@ export default class Chopper extends Overdrag {
       parent: this.headerElement,
       type: "div",
       classNames: ["chopper-badge"],
-      text: "chopper by Protosus",
+      text: "devtools-chopper by Protosus",
     });
 
     this.displayElement = this.createInternalElement({
@@ -179,13 +186,13 @@ export default class Chopper extends Overdrag {
   }
 
   private setLevelButtonColor() {
-      // Change the background color of the logLevelElement based on the log level
-      this.logLevelElement.style.backgroundColor =
-        LEVEL_COLORS[this.level].backgroundColor || "transparent";
+    // Change the background color of the logLevelElement based on the log level
+    this.logLevelElement.style.backgroundColor =
+      LEVEL_COLORS[this.level].backgroundColor || "transparent";
 
-      // Change the color of the logLevelElement based on the log level
-      this.logLevelElement.style.color =
-        LEVEL_COLORS[this.level].color || "black";
+    // Change the color of the logLevelElement based on the log level
+    this.logLevelElement.style.color =
+      LEVEL_COLORS[this.level].color || "black";
 
     // Change outline color of the logLevelElement based on the log level
     this.logLevelElement.style.outlineColor =
