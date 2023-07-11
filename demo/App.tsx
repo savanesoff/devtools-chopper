@@ -13,7 +13,7 @@ function App() {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    fetch(readmePath, { mode: "no-cors" })
+    fetch(readmePath)
       .then((res) => res.text())
       .then((text) => setContent(text));
   }, []);
