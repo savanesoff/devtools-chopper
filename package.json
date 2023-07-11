@@ -1,7 +1,7 @@
 {
   "name": "devtools-chopper",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "description": "Chopper is a Javascript log display devtool which allows you to monitor application logs in DOM",
   "bugs": {
@@ -42,7 +42,7 @@
     "build:esm": "tsc -p ./tsconfig.build.json && mv ./dist/index.js ./dist/index.mjs",
     "prepack": "pnpm run build",
     "test": "vitest --run",
-    "release": "pnpm build && pnpm test && pnpm changeset publish"
+    "release": "pnpm run build && pnpm run test && pnpm changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
@@ -60,6 +60,7 @@
     "jsdom": "^22.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.7",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
     "vitest": "^0.32.4",

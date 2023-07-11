@@ -1,16 +1,26 @@
+import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import "./App.css";
 import "./chopper";
-
+// determine the environment
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - this is a global variable
+const isDev = process.env.NODE_ENV === "development";
+const readmePath = isDev
+  ? "../README.md"
+  : "https://raw.githubusercontent.com/savanesoff/devtools-chopper/main/README.md";
 function App() {
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    fetch(readmePath, { mode: "no-cors" })
+      .then((res) => res.text())
+      .then((text) => setContent(text));
+  }, []);
+
   return (
     <>
-      <h1>devtools-chopper</h1>
-      <p>
-        Chopper is a simple, fast and flexible log control tool designed display
-        logs in browser window with various filters, drag and resize
-        capabilities.
-      </p>
-      <div></div>
+      <ReactMarkdown children={content} />
     </>
   );
 }

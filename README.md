@@ -17,7 +17,7 @@ Its highly customizable and extends [`overdrag`](https://www.npmjs.com/package/d
 
 You can view a live demo [here](https://savanesoff.github.io/devtools-chopper)
 
-[![Validator](demo/assets/devtools-chopper.gif)](https://savanesoff.github.io/devtools-chopper)
+[![Validator](https://raw.githubusercontent.com/savanesoff/devtools-chopper/main/demo/assets/devtools-chopper.gif)](https://savanesoff.github.io/devtools-chopper)
 
 ## Installation
 
@@ -111,7 +111,7 @@ Chopper includes the following functionalities and interactions:
 ## Console
 
 When printing to console, the theme will be applied as well!
-![Alt text](demo/assets/console.png)
+![Alt text](https://raw.githubusercontent.com/savanesoff/devtools-chopper/main/demo/assets/console.png)
 
 ## Future plans
 
