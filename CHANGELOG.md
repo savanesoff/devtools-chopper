@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 0.1.2
+
+### Patch Changes
+
+- Sets README asset paths
+
 ## 0.1.1
 
 ### Patch Changes
