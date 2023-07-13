@@ -2,8 +2,7 @@ import { useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, Card, Divider, Typography } from "@mui/material";
 import Chopper from "./../src";
-import { COLORS } from "./../src/styles";
-import byProtosus from "./../public/protosus.svg";
+import { COLORS } from "./../src/styles"; 
 // @eslint-ignore
 declare global {
   interface Window {
@@ -20,7 +19,7 @@ if (!window.chopper) {
 }
 
 function App() {
-  const [randomScroll, setRandomScroll] = useState<NodeJS.Timeout | null>(null);
+  const [randomScroll, setRandomScroll] = useState<ReturnType<typeof setInterval> | null>(null);
   const toggleRandomScroll = useCallback(() => {
     if (randomScroll) {
       clearInterval(randomScroll);
@@ -44,7 +43,7 @@ function App() {
     }
   }, [randomScroll]);
 
-  const [randomPin, setRandomPin] = useState<NodeJS.Timeout | null>(null);
+  const [randomPin, setRandomPin] = useState<ReturnType<typeof setInterval> | null>(null);
   const toggleRandomPin = useCallback(() => {
     if (randomPin) {
       clearInterval(randomPin);
