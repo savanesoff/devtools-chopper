@@ -97,7 +97,7 @@ Optional:
 
 ## Extending Class
 
-Use `devtools-chopper` functionality to track you class instances logs, so you can monitor its activity:
+Use `devtools-chopper` functionality to track any class instances logs, so you can monitor its activity:
 
 ```TS
 import Chopper from "devtools-chopper";
@@ -111,7 +111,7 @@ class MyClass extends Chopper {
 ```
 
 > **NOTE**  
-> Extends [`overdrag`](https://www.npmjs.com/package/overdrag) which extends [`eventemitter3`](https://www.npmjs.com/package/eventemitter3).
+> Extends [`overdrag`](https://www.npmjs.com/package/overdrag) which inherits [`eventemitter3`](https://www.npmjs.com/package/eventemitter3).
 
 ## Description
 
