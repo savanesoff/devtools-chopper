@@ -41,7 +41,7 @@ yarn add -D devtools-chopper
 `pnpm`
 
 ```shell
-yarn add -D devtools-chopper
+pnpm add -D devtools-chopper
 ```
 
 ## Usage
