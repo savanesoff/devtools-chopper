@@ -1,6 +1,5 @@
-[![Protosus](public/protosus.svg)](https://github.com/savanesoff/devtools-chopper)
-
-
+[![by Protosus](https://raw.githubusercontent.com/savanesoff/protosus/main/public/icons/by-protosus.svg)](https://github.com/savanesoff/devtools-chopper)
+ 
 # devtools-chopper
 
 [![Github](https://badgen.net/badge/Protosus/devtools-chopper?color=purple&icon=github)](https://github.com/savanesoff/devtools-chopper)

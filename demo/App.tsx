@@ -83,7 +83,7 @@ function App() {
       >
         <Typography variant="h3">devtool-chopper TS demo </Typography>
         <Divider sx={{ width: "100%", margin: "1rem" }} />
-        <img src={byProtosus} />
+        <img src="https://raw.githubusercontent.com/savanesoff/protosus/main/public/icons/by-protosus.svg" />
         <Divider sx={{ width: "100%", margin: "1rem" }} />
         <Box
           sx={{
