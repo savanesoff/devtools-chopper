@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 0.2.2
+
+### Patch Changes
+
+- Readme fix
+
 ## 0.2.1
 
 ### Patch Changes
