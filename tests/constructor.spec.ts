@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/dom";
 import "vitest-dom/extend-expect";
 import Chopper from "./../src";
-
-function isNullOrUndefined(value: any): boolean {
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+function isNullOrUndefined(value: unknown): boolean {
   return value === null || value === undefined;
 }
 
