@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 0.2.0
+
+### Minor Changes
+
+- Custom logo and favicon designs. Demo Mui setup. Readme updates.
+
 ## 0.1.2
 
 ### Patch Changes

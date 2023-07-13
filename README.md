@@ -1,17 +1,18 @@
-by `Protosus`
-
+[![by Protosus](https://raw.githubusercontent.com/savanesoff/protosus/main/public/icons/by-protosus.svg)](https://github.com/savanesoff/devtools-chopper)
+ 
 # devtools-chopper
 
 [![Github](https://badgen.net/badge/Protosus/devtools-chopper?color=purple&icon=github)](https://github.com/savanesoff/devtools-chopper)
-[![Build Status](https://github.com/savanesoff/devtools-chopper/actions/workflows/test.yaml/badge.svg?branch=main&event=push)](https://github.com/savanesoff/devtools-chopper/actions/workflows/test.yaml)
+[![Build Status](https://github.com/savanesoff/devtools-chopper/actions/workflows/publish.yaml/badge.svg?branch=main&event=push)](https://github.com/savanesoff/devtools-chopper/actions/workflows/publish.yaml)
 [![npm version](https://badge.fury.io/js/devtools-chopper.svg)](https://badge.fury.io/js/devtools-chopper)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Li](https://badgen.net/badge/savanesoff/LI?color=blue)](https://github.com/savanesoff/devtools-chopper)
 
-Chopper is a Javascript log display devtool which allows you to monitor application logs in DOM.
-Its highly customizable and extends [`overdrag`](https://www.npmjs.com/package/devtools-chopper) package.
+Chopper is a Javascript log display devtool which allows you to monitor application logs in DOM. Main feature being the ability to `PIN` specific type logs to make is easier to track log messages you're most interested in.
 
-> 🌲🌲🌲 "chopping" logs 🌲🌲🌲
+Its highly customizable and extends [`overdrag`](https://www.npmjs.com/package/devtools-chopper) package which allows element to be dragged, resized and placed anywhere on screen.
+
+> 🌲🌲🌲 `chopping` logs 🌲🌲🌲
 
 ## Demo
 
@@ -21,27 +22,37 @@ You can view a live demo [here](https://savanesoff.github.io/devtools-chopper)
 
 ## Installation
 
-To install `devtools-chopper`, use npm or yarn:
-
-```shell
-npm install devtools-chopper
-```
-
-or
-
-```shell
-yarn add devtools-chopper
-```
-
 [![NPM](https://nodei.co/npm/devtools-chopper.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/devtools-chopper/)
 
+To install `devtools-chopper`:
+
+`npm`
+
+```shell
+npm install --save-dev devtools-chopper
+```
+
+`yarn`
+
+```shell
+yarn add -D devtools-chopper
+```
+
+`pnpm`
+
+```shell
+yarn add -D devtools-chopper
+```
+
 ## Usage
+
+`devtools-chopper` is framework agnostic and can be used in any JS environment, `React`, `Angular`, `Vue` and supports TS out-of-the-box.
 
 ```TS
 import Chopper from "devtools-chopper";
 const chopper = new Chopper();
 
-// infinite scroll
+// standard scroll
 chopper.$log('Message');
 // pinned
 chopper.$pin.log('Message');
@@ -61,9 +72,10 @@ Optional:
 
 - **`console`** (default: 'true'): Print to console.
 
-The following are inherited`overdrag` parameters:
+<details>
+<summary> See inherited overdrag parameters: </summary>
 
-- **`element`** (default: random positioned `div` in body): The DOM element to control.
+- **`element`** (default: randomly positioned `div` in body): The DOM element container of chopper.
 
 - **`minContentHeight`** (default: `Overdrag.DEFAULTS.minContentHeight`): The minimum height of the DOM element (CSS height) in pixels. This prevents resizing smaller than the specified value.
 
@@ -80,8 +92,11 @@ The following are inherited`overdrag` parameters:
 - **`clickDetectionThreshold`** (default: `Overdrag.DEFAULTS.clickDetectionThreshold`): The threshold distance to detect a click event. If you've started dragging the element, mouse up event will not trigger `click` event.
 
 - **`stack`** (default: `false`): If true, an `Overdrag` parent element that has a recursively embedded `Overdrag` elements as a child will retain `over` state while the child is active. Else, the parent element will be set to `out` state (inactive)
+</details>
 
-## Extend Class
+## Extending Class
+
+Use `devtools-chopper` functionality to track any class instances logs, so you can monitor its activity:
 
 ```TS
 import Chopper from "devtools-chopper";
@@ -94,30 +109,42 @@ class MyClass extends Chopper {
 }
 ```
 
+> **NOTE**  
+> Extends [`overdrag`](https://www.npmjs.com/package/overdrag) which inherits [`eventemitter3`](https://www.npmjs.com/package/eventemitter3).
+
 ## Description
 
-You can control many different aspects of the instance by referring to its [`overdrag` extension documentation](https://www.npmjs.com/package/devtools-chopper)
+You can control many different aspects of the instance by referring to its `overdrag` extension [documentation](https://www.npmjs.com/package/devtools-chopper)
 
 ### In Brief:
 
-Chopper includes the following functionalities and interactions:
+`devtools-chopper` includes the following functionalities and interactions:
 
 - Draggable: within offsetParent bounds
-- Resizable: using control points
+- Resizable: using 8 control points
 - Play, Pause of scrollable logs
-- Level switch: changes level interactively
-- Style every aspect of it using CSS
+- Level switch: changes level interactively, by using header buttons
+- Style every aspect of it using CSS or provide JSON styles options
 
 ## Console
 
-When printing to console, the theme will be applied as well!
+`devtools-chopper` prints to console automatically using its current gates. When printing to console, the theme will be applied as well!
 ![Alt text](https://raw.githubusercontent.com/savanesoff/devtools-chopper/main/demo/assets/console.png)
 
-## Future plans
+> **NOTE**
+> You can disable console printing be passing `{console: false}`
 
-- No future plans
+```TS
+const chopper = new Chopper({name: 'Event Monitoring', console: false});
+```
 
-### PS
+## Road map
+
+- Enable unit tests
+- Enable pinning logs interactively by selecting log origin you're interested in.
+- Enable logged objects preview
+
+# PS
 
 [![Li](https://badgen.net/badge/Hit%20me%20up%20on/LI?color=blue)](https://github.com/savanesoff/devtools-chopper)
 
