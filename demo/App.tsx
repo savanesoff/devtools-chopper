@@ -103,10 +103,10 @@ function App() {
           </a>
 
           <a
-            href="https://github.com/savanesoff/devtools-chopper/actions/workflows/test.yaml"
+            href="https://github.com/savanesoff/devtools-chopper/actions/workflows/publish.yaml"
             target="_blank"
           >
-            <img src="https://github.com/savanesoff/devtools-chopper/actions/workflows/test.yaml/badge.svg?branch=main&event=push" />
+            <img src="https://github.com/savanesoff/devtools-chopper/actions/workflows/publish.yaml/badge.svg?branch=main&event=push" />
           </a>
 
           <a

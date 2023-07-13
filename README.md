@@ -4,7 +4,7 @@
 # devtools-chopper
 
 [![Github](https://badgen.net/badge/Protosus/devtools-chopper?color=purple&icon=github)](https://github.com/savanesoff/devtools-chopper)
-[![Build Status](https://github.com/savanesoff/devtools-chopper/actions/workflows/test.yaml/badge.svg?branch=main&event=push)](https://github.com/savanesoff/devtools-chopper/actions/workflows/test.yaml)
+[![Build Status](https://github.com/savanesoff/devtools-chopper/actions/workflows/publish.yaml/badge.svg?branch=main&event=push)](https://github.com/savanesoff/devtools-chopper/actions/workflows/publish.yaml)
 [![npm version](https://badge.fury.io/js/devtools-chopper.svg)](https://badge.fury.io/js/devtools-chopper)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Li](https://badgen.net/badge/savanesoff/LI?color=blue)](https://github.com/savanesoff/devtools-chopper)
