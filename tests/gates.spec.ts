@@ -1,8 +1,6 @@
 import { screen } from "@testing-library/dom";
 import "vitest-dom/extend-expect";
 import Chopper from "../src";
-import Overdrag, { ControlProps } from "overdrag";
-import { getRandomValue } from "./setup";
 
 describe("gates", () => {
   let chopper: Chopper;
