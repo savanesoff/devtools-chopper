@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 1.0.1
+
+### Patch Changes
+
+- Fixes Li links
+
 ## 1.0.0
 
 ### Major Changes
