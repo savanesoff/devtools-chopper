@@ -94,6 +94,10 @@ Optional:
 - **`stack`** (default: `false`): If true, an `Overdrag` parent element that has a recursively embedded `Overdrag` elements as a child will retain `over` state while the child is active. Else, the parent element will be set to `out` state (inactive)
 </details>
 
+> **NOTE**  
+Multiple instances can be spawned. Each will position itself randomly unless you specify its element style or provide your own element.
+
+
 ## Extending Class
 
 Use `devtools-chopper` functionality to track any class instances logs, so you can monitor its activity:
