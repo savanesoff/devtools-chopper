@@ -203,6 +203,6 @@ const chopper = new Chopper({name: 'Event Monitoring', console: false});
 
 # PS
 
-[![Li](https://badgen.net/badge/Hit%20me%20up%20on/LI?color=blue)](https://github.com/savanesoff/devtools-chopper)
+[![Li](https://badgen.net/badge/Hit%20me%20up%20on/LI?color=blue)](https://www.linkedin.com/in/samvel-avanesov)
 
 Enjoy! 🎉🎉🎉

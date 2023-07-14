@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import { Box, Card, Divider, Typography } from "@mui/material";
 import Chopper from "./../src";
-import { COLORS } from "./../src/styles"; 
+import { COLORS } from "./../src/styles";
 // @eslint-ignore
 declare global {
   interface Window {
@@ -19,7 +19,9 @@ if (!window.chopper) {
 }
 
 function App() {
-  const [randomScroll, setRandomScroll] = useState<ReturnType<typeof setInterval> | null>(null);
+  const [randomScroll, setRandomScroll] = useState<ReturnType<
+    typeof setInterval
+  > | null>(null);
   const toggleRandomScroll = useCallback(() => {
     if (randomScroll) {
       clearInterval(randomScroll);
@@ -43,7 +45,9 @@ function App() {
     }
   }, [randomScroll]);
 
-  const [randomPin, setRandomPin] = useState<ReturnType<typeof setInterval> | null>(null);
+  const [randomPin, setRandomPin] = useState<ReturnType<
+    typeof setInterval
+  > | null>(null);
   const toggleRandomPin = useCallback(() => {
     if (randomPin) {
       clearInterval(randomPin);
@@ -108,24 +112,15 @@ function App() {
             <img src="https://github.com/savanesoff/devtools-chopper/actions/workflows/publish.yaml/badge.svg?branch=main&event=push" />
           </a>
 
-          <a
-            href="https://badge.fury.io/js/devtools-chopper"
-            target="_blank"
-          >
+          <a href="https://badge.fury.io/js/devtools-chopper" target="_blank">
             <img src="https://badge.fury.io/js/devtools-chopper.svg" />
           </a>
 
-          <a
-            href="https://opensource.org/licenses/MIT"
-            target="_blank"
-          >
+          <a href="https://opensource.org/licenses/MIT" target="_blank">
             <img src="https://img.shields.io/badge/license-MIT-blue.svg" />
           </a>
 
-          <a
-            href="(https://github.com/savanesoff/devtools-chopper"
-            target="_blank"
-          >
+          <a href="https://www.linkedin.com/in/samvel-avanesov" target="_blank">
             <img src="https://badgen.net/badge/savanesoff/LI?color=blue" />
           </a>
         </Box>
