@@ -331,7 +331,7 @@ export default class Chopper extends Overdrag {
       parent: entry,
       type: "pre",
       classNames: ["chopper-data"],
-      text: "> " + data.join("\n> "),
+      text: data.join("\n"),
     });
 
     return entry;
