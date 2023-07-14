@@ -348,7 +348,7 @@ export default class Chopper extends Overdrag {
 
   private readonly pin = (level: ConsoleType, data: unknown[]) => {
     const info = this.getLogInfo(4);
-    this.console(data, level, info);
+    this.renderOutput(data, level);
     this.pinned.set(level, { data, info });
     this.renderPinned();
   };
