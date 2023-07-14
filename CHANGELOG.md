@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 1.0.2
+
+### Patch Changes
+
+- Li readme top link fix
+
 ## 1.0.1
 
 ### Patch Changes
