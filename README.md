@@ -1,5 +1,5 @@
 [![by Protosus](https://raw.githubusercontent.com/savanesoff/protosus/main/public/icons/by-protosus.svg)](https://github.com/savanesoff/devtools-chopper)
- 
+
 # devtools-chopper
 
 [![Github](https://badgen.net/badge/Protosus/devtools-chopper?color=purple&icon=github)](https://github.com/savanesoff/devtools-chopper)
@@ -58,6 +58,52 @@ chopper.$log('Message');
 chopper.$pin.log('Message');
 ```
 
+### API
+
+Standard log API available:
+
+- `$debug()`
+- `$log()`
+- `$info()`
+- `$warn()`
+- `$error()`
+
+To pin a message that is not los in scrolling jungle, use `$pin.<type>`, the message will be printed as a pinned entry as well as in the scrolling set of messages. Its a great way to track logs without searching for it.
+However, using standard console of devtools, you can simply enter a filter parameter to achieve the very same effect.
+
+Each takes unlimited number of arguments, just like a typical `console` method would.
+
+```TS
+// ...
+chopper.$log('arg1', 'arg3', 'arg3', ...);
+```
+
+Messages will not be rendered if `logLevel` is set to filter out a message log type.
+
+Ex: If `logLevel` is set to `none`, no messages will be printed.
+
+Here is a map of `logLevel` gates:
+
+```JSON
+{
+    "verbose": ["debug", "log", "info", "warn", "error"],
+    "info": ["info", "warn", "error"],
+    "warn": ["warn", "error"],
+    "error": ["error"],
+    "none": [],
+}
+
+```
+
+<details> 
+<summary> Advanced APIs </summary>
+If you want to modify various parameters of a `chopper` instance, the following APIs are available for use:
+
+- `setLogLevel( level Levels )`: changes current log level
+- `console(data: unknown[], type: ConsoleType, info: EntryInfo)`: Override method that prints to console. Ex: if you'd like it to print only raw data without prettifying it with styles and other info.
+- `renderEntry(parent: HTMLElement, data: unknown[], type: ConsoleType, info: EntryInfo)`: override how the chopper renders log entry element.
+</details>
+
 ## Constructor
 
 The Overdrag class constructor accepts an object with the following properties:
@@ -95,8 +141,7 @@ Optional:
 </details>
 
 > **NOTE**  
-Multiple instances can be spawned. Each will position itself randomly unless you specify its element style or provide your own element.
-
+> Multiple instances can be spawned. Each will position itself randomly unless you specify its element style or provide your own element.
 
 ## Extending Class
 
@@ -119,6 +164,14 @@ class MyClass extends Chopper {
 ## Description
 
 You can control many different aspects of the instance by referring to its `overdrag` extension [documentation](https://www.npmjs.com/package/devtools-chopper)
+
+### Log Entry
+
+Each log entry includes the following info:
+
+- Type of log and time of entry `<log type>@<time>` ex: `debug@12345555353`
+- Log call origin file path and position: `<file path>:<line>:<column>`
+- Log message as string
 
 ### In Brief:
 
