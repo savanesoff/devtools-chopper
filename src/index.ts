@@ -148,7 +148,7 @@ export default class Chopper extends Overdrag {
       parent: this.titleElement,
       type: "div",
       classNames: ["chopper-level"],
-      text: this.level,
+      text: this.logLevel,
     });
 
     this.statusElement = this.createInternalElement({
