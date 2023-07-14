@@ -86,6 +86,7 @@ export default class Chopper extends Overdrag {
     if (!element) {
       element = document.createElement("div");
       document.body.appendChild(element);
+      // position randomly on the screen
       element.style.left = `${Math.floor(
         Math.random() * (window.innerWidth - parseInt(CLASSES.container.width))
       )}px`;
