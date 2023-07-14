@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 1.0.3
+
+### Patch Changes
+
+- Type fix
+
 ## 1.0.2
 
 ### Patch Changes

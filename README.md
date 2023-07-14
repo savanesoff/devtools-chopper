@@ -189,7 +189,7 @@ Each log entry includes the following info:
 ![Alt text](https://raw.githubusercontent.com/savanesoff/devtools-chopper/main/demo/assets/console.png)
 
 > **NOTE**
-> You can disable console printing be passing `{console: false}`
+> You can disable console printing by passing `{console: false}`
 
 ```TS
 const chopper = new Chopper({name: 'Event Monitoring', console: false});
