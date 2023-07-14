@@ -341,7 +341,7 @@ export default class Chopper extends Overdrag {
     this.pinnedOutputElement.innerHTML = "";
     this.pinned.forEach(({ data, info }, type) => {
       // Filter out the types that are not allowed
-      if (!this.gate[this.level].includes(type)) return;
+      if (!this.gate[this.logLevel].includes(type)) return;
       this.renderEntry(this.pinnedOutputElement, data, type, info);
     });
   }
