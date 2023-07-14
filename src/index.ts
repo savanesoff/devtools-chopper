@@ -14,7 +14,7 @@ type EntryInfo = {
 // Define props interface for Chopper class
 interface ChopperProps extends Partial<ControlProps> {
   name: string;
-  level?: Levels;
+  logLevel?: Levels;
   styles?: Styles;
   console?: boolean;
 }
@@ -30,7 +30,7 @@ const TIME_FORMAT: Intl.DateTimeFormatOptions = {
 
 // Define Chopper class
 export default class Chopper extends Overdrag {
-  protected level: Levels;
+  protected logLevel: Levels;
   protected readonly name: string;
   protected readonly styles: Styles;
   protected readonly headerElement: HTMLElement;
@@ -70,7 +70,7 @@ export default class Chopper extends Overdrag {
 
   constructor({
     console = true,
-    level = "verbose",
+    logLevel = "verbose",
     name,
     styles,
     element,
@@ -86,6 +86,7 @@ export default class Chopper extends Overdrag {
     if (!element) {
       element = document.createElement("div");
       document.body.appendChild(element);
+      // position randomly on the screen
       element.style.left = `${Math.floor(
         Math.random() * (window.innerWidth - parseInt(CLASSES.container.width))
       )}px`;
@@ -104,7 +105,7 @@ export default class Chopper extends Overdrag {
       controlsThreshold,
       clickDetectionThreshold,
     });
-    this.level = level;
+    this.logLevel = logLevel;
     this.name = name;
     this.styles = compileStyles({ ...CONSOLE_STYLE, ...styles });
     this.printToConsole = console;
@@ -147,7 +148,7 @@ export default class Chopper extends Overdrag {
       parent: this.titleElement,
       type: "div",
       classNames: ["chopper-level"],
-      text: this.level,
+      text: this.logLevel,
     });
 
     this.statusElement = this.createInternalElement({
@@ -183,9 +184,9 @@ export default class Chopper extends Overdrag {
     // Make logLevelElement clickable that changes log level
     this.logLevelElement.addEventListener("click", () => {
       const levels = Object.keys(this.gate) as Levels[];
-      const index = levels.indexOf(this.level);
-      this.level = levels[(index + 1) % levels.length];
-      this.logLevelElement.textContent = this.level;
+      const index = levels.indexOf(this.logLevel);
+      this.logLevel = levels[(index + 1) % levels.length];
+      this.logLevelElement.textContent = this.logLevel;
 
       this.setLevelButtonColor();
     });
@@ -196,15 +197,15 @@ export default class Chopper extends Overdrag {
   private setLevelButtonColor() {
     // Change the background color of the logLevelElement based on the log level
     this.logLevelElement.style.backgroundColor =
-      LEVEL_COLORS[this.level].backgroundColor || "transparent";
+      LEVEL_COLORS[this.logLevel].backgroundColor || "transparent";
 
     // Change the color of the logLevelElement based on the log level
     this.logLevelElement.style.color =
-      LEVEL_COLORS[this.level].color || "black";
+      LEVEL_COLORS[this.logLevel].color || "black";
 
     // Change outline color of the logLevelElement based on the log level
     this.logLevelElement.style.outlineColor =
-      LEVEL_COLORS[this.level].color || "black";
+      LEVEL_COLORS[this.logLevel].color || "black";
   }
 
   private createInternalElement({
@@ -233,8 +234,10 @@ export default class Chopper extends Overdrag {
 
   // Set log level
   setLogLevel(level: Levels) {
-    this.level = level;
+    this.logLevel = level;
   }
+
+  readonly getLogLevel = () => this.logLevel;
 
   private getLogInfo(stackIndex: number): EntryInfo {
     const time = new Date().toLocaleTimeString("en-US", TIME_FORMAT);
@@ -257,7 +260,7 @@ export default class Chopper extends Overdrag {
 
   private renderOutput(data: unknown[], type: ConsoleType) {
     // Filter out the types that are not allowed
-    if (!this.gate[this.level].includes(type)) return;
+    if (!this.gate[this.logLevel].includes(type)) return;
 
     const info = this.getLogInfo(4);
     // TODO: Detect data types and JSON.parse the objects with indentation
@@ -328,7 +331,7 @@ export default class Chopper extends Overdrag {
       parent: entry,
       type: "pre",
       classNames: ["chopper-data"],
-      text: "> " + data.join("\n> "),
+      text: data.join("\n"),
     });
 
     return entry;
@@ -338,14 +341,14 @@ export default class Chopper extends Overdrag {
     this.pinnedOutputElement.innerHTML = "";
     this.pinned.forEach(({ data, info }, type) => {
       // Filter out the types that are not allowed
-      if (!this.gate[this.level].includes(type)) return;
+      if (!this.gate[this.logLevel].includes(type)) return;
       this.renderEntry(this.pinnedOutputElement, data, type, info);
     });
   }
 
   private readonly pin = (level: ConsoleType, data: unknown[]) => {
     const info = this.getLogInfo(4);
-    this.console(data, level, info);
+    this.renderOutput(data, level);
     this.pinned.set(level, { data, info });
     this.renderPinned();
   };
