@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 1.0.0
+
+### Major Changes
+
+- Changes props names and inclused unit tests. Readme includes advanced options.
+
 ## 0.2.2
 
 ### Patch Changes
