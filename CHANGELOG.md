@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 1.1.0
+
+### Minor Changes
+
+- Overdrag upgraded. Minor typo fixes. Minor alignment fixes. Header title dimmmer.
+
 ## 1.0.3
 
 ### Patch Changes
