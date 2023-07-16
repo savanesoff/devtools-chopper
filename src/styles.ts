@@ -238,7 +238,7 @@ export const CLASSES = {
     position: "relative",
     boxShadow: "-1px -8px 9px 0px rgba(0,0,0,0.5)",
     backgroundColor: "rgba(0, 0, 0, 0.661)",
-    borderLeft: "1px solid rgba(255, 255, 255, 0.394)",
+    // borderLeft: "1px solid rgba(255, 255, 255, 0.394)",
   },
   "pinned-output::before": {
     // height: "inherit",
