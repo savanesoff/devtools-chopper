@@ -262,6 +262,7 @@ export const CLASSES = {
     justifyContent: "space-between",
     alignItems: "stretch",
     borderBottom: "1px solid rgba(255, 255, 255, 0.394)",
+    cursor: "default",
   },
   data: {
     display: "flex",
