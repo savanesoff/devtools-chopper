@@ -171,7 +171,7 @@ export const CLASSES = {
     flexDirection: "row",
     alignItems: "center",
     gap: "0.5rem",
-    color: "white",
+    color: "#b7b7b7",
     fontSize: "0.7rem",
     padding: "0.3rem 0 0.3rem 1rem",
   },
