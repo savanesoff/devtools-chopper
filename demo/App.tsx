@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react";
-import Button from "@mui/material/Button";
 import { Box, Card, Divider, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import { useCallback, useState } from "react";
 import Chopper from "./../src";
 import { COLORS } from "./../src/styles";
 // @eslint-ignore
@@ -84,7 +84,7 @@ function App() {
           maxWidth: "60%",
         }}
       >
-        <Typography variant="h3">devtool-chopper TS demo </Typography>
+        <Typography variant="h3">devtool-chopper demo </Typography>
         <Divider sx={{ width: "100%", margin: "1rem" }} />
         <img src="https://raw.githubusercontent.com/savanesoff/protosus/main/public/icons/by-protosus.svg" />
         <Divider sx={{ width: "100%", margin: "1rem" }} />
@@ -124,15 +124,17 @@ function App() {
             <img src="https://badgen.net/badge/savanesoff/LI?color=blue" />
           </a>
         </Box>
-        <Typography variant="h5">
-          Open console to see styles chopper logs
-        </Typography>
+
         <Typography variant="body1">
           Chopper is a Javascript log display devtool which allows you to
           monitor application logs in DOM.
         </Typography>
         <Typography variant="body2">
           You can drag and resize the chopper window.
+        </Typography>
+        <Divider sx={{ width: "100%", margin: "1rem" }} />
+        <Typography variant="body2">
+          Open console to see styled chopper logs
         </Typography>
         <Card
           variant="elevation"
