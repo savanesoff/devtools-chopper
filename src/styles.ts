@@ -200,6 +200,7 @@ export const CLASSES = {
     color: "#d986ff",
     borderRadius: "0.5rem",
     textWrap: "nowrap",
+    cursor: "pointer",
     outline: "1px solid #e9baff",
     outlineOffset: "-1px",
   },
