@@ -188,7 +188,7 @@ Each log entry includes the following info:
 `devtools-chopper` prints to console automatically using its current gates. When printing to console, the theme will be applied as well!
 ![Alt text](https://raw.githubusercontent.com/savanesoff/devtools-chopper/main/demo/assets/console.png)
 
-> **NOTE**
+> **NOTE**  
 > You can disable console printing by passing `{console: false}`
 
 ```TS
