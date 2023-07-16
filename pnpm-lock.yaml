@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   overdrag:
-    specifier: ^1.0.1
-    version: 1.0.1
+    specifier: ^1.1.2
+    version: 1.1.2
 
 devDependencies:
   '@changesets/cli':
@@ -3150,8 +3150,8 @@ packages:
     resolution: {integrity: sha512-/jHxFIzoMXdqPzTaCpFzAAWhpkSjZPF4Vsn6jAfNpmbH/ymsmd7Qc6VE9BGn0L6YMj6uwpQLxCECpus4ukKS9Q==}
     dev: true
 
-  /overdrag@1.0.1:
-    resolution: {integrity: sha512-VtU8nQIl+nFrbXZbj315dJYl5c6F3Z/dIPpUN3CXaciTYVzoS3gu33aYhf0ws+gKbncHrjQOpVfEAr87cicnTg==}
+  /overdrag@1.1.2:
+    resolution: {integrity: sha512-C2UELOHZ6ubkJ+VEw/YYBS1i418+b9RRdT13r2+82y9+0bISfxvVzmZIwrCu4HvF1TeBIPC1K6BlJDwj+8Lq0w==}
     dependencies:
       eventemitter3: 5.0.1
     dev: false
