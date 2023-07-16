@@ -245,7 +245,7 @@ export const CLASSES = {
     display: "block",
     content: '"pin"',
     top: "0.5rem",
-    left: "-0.0rem",
+    left: "-0.2rem",
     position: "absolute",
     ...fontStyle,
     fontSize: "0.8rem",
