@@ -24,24 +24,24 @@ You can view a live demo [here](https://savanesoff.github.io/devtools-chopper)
 
 [![NPM](https://nodei.co/npm/devtools-chopper.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/devtools-chopper/)
 
-To install `devtools-chopper`:
+To install `devtools-chopper`, use p/npm yarn:
 
-`npm`
+- using `npm`
 
 ```shell
-npm install --save-dev devtools-chopper
+npm install devtools-chopper
 ```
 
-`yarn`
+- using `yarn`
 
 ```shell
-yarn add -D devtools-chopper
+yarn add devtools-chopper
 ```
 
-`pnpm`
+- using `pnpm`
 
 ```shell
-pnpm add -D devtools-chopper
+pnpm add devtools-chopper
 ```
 
 ## Usage

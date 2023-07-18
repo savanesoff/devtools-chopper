@@ -1,5 +1,11 @@
 # devtools-chopper
 
+## 1.2.0
+
+### Minor Changes
+
+- updated dependancies
+
 ## 1.1.0
 
 ### Minor Changes
