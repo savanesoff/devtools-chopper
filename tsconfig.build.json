@@ -16,7 +16,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "."
   },
-  "files": ["./src/index.ts"]
+  "include": ["src"]
 }
